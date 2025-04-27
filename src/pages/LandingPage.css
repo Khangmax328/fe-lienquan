@@ -1,0 +1,352 @@
+.landing-container {
+  padding: 20px;
+}
+
+/* Tiêu đề DANH MỤC */
+.section-title {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  color: #e60000;
+  margin: 50px 0 30px;
+  text-transform: uppercase;
+  position: relative;
+  letter-spacing: 1px;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #e60000;
+  margin: 10px auto 0;
+  border-radius: 6px;
+  animation: underlineSlide 0.5s ease-out;
+}
+
+@keyframes underlineSlide {
+  from {
+    width: 0;
+    opacity: 0;
+  }
+  to {
+    width: 80px;
+    opacity: 1;
+  }
+}
+
+.card-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 20px;
+}
+
+/* Thẻ danh mục */
+.category-card {
+  width: 240px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  text-align: center;
+  padding-bottom: 20px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.category-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.card-image {
+  width: 100%;
+  height: 150px;
+  object-fit: fill;
+}
+
+.card-name {
+  font-weight: 700;
+  color: #e60000;
+  font-size: 16px;
+  margin-top: 12px;
+}
+
+.card-count {
+  font-size: 14px;
+  color: #444;
+  margin: 4px 0 12px;
+}
+.card-count strong {
+  color: #e60000; /* Màu đỏ cho số */
+  font-weight: bold;
+}
+/* Nút XEM TẤT CẢ */
+.btn-view {
+  background-color: #e60000;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-view:hover {
+  background-color: #cc0000;
+}
+.banner-section {
+  background-size: cover;
+  background-position: center;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  margin-bottom: 40px;
+}
+
+.banner-overlay {
+  width: 100%;
+  max-width: 1200px;
+  height: 355px; /* CHO BẰNG VỚI .banner-right-image */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px; /* bỏ padding top/bottom, chỉ để trái/phải */
+}
+
+
+.top-buyers-box {
+  width: 400px;
+  height: 313px;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 24px;
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 0 12px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+.top-buyers-header {
+  font-size: 22px;
+  font-weight: bold;
+  color: #FFD700;
+  margin-bottom: 16px;
+  text-align: center;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  padding-bottom: 8px;
+}
+
+.top-buyers-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.buyer-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  transition: background 0.2s ease;
+}
+
+.buyer-item:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.buyer-rank {
+  width: 28px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.buyer-item:nth-child(1) .buyer-rank { color: #FFD700; } /* Vàng */
+.buyer-item:nth-child(2) .buyer-rank { color: #C0C0C0; } /* Bạc */
+.buyer-item:nth-child(3) .buyer-rank { color: #CD7F32; } /* Đồng */
+
+.buyer-name {
+  flex: 1;
+  margin-left: 10px;
+  color: white;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.buyer-money {
+  background-color: #e60000;
+  color: white;
+  border-radius: 14px;
+  padding: 4px 10px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+
+.banner-right {
+  flex-shrink: 0;
+}
+
+.banner-right-image {
+  height: 355px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.buyer-rank-icon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Ngôi sao đỏ cho Top 1 */
+.rank-1::before {
+  content: "★";
+  font-size: 32px;
+  color: #ff4c2b;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Ẩn số vì đã hiển thị trong sao */
+.rank-1 {
+  color: black;
+  z-index: 1;
+}
+
+/* Các hạng còn lại là vòng tròn xanh */
+.rank-2,
+.rank-3,
+.rank-4,
+.rank-5 {
+  background-color: #00e0b6;
+  border-radius: 50%;
+  color: black;
+}
+
+/* Responsive sửa lại cho banner đẹp trên mobile và danh mục co lại 2 mục */
+
+@media screen and (max-width: 768px) {
+  .landing-container {
+    padding: 0px;
+}
+  .banner-section {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px;
+    gap: 12px;
+    /* height: auto; */
+    height: 550px;
+    border-radius: unset;
+
+  }
+
+  .top-buyers-box {
+    order: 1;
+    width: 48%;
+    min-width: 180px;
+    height: auto;
+    max-width: 313px;
+    margin-top:-4px;
+    border-radius: unset;
+
+  }
+
+  .banner-right-image {
+    margin-top: -91px;
+    order: 2;
+    width: 48%;
+    min-width: 180px;
+    height: auto;
+    max-height: 200px;
+    object-fit: contain;
+    max-width: 362px;
+    border-radius: unset;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 8px;
+    padding: 0 8px;
+  }
+
+  .category-card {
+    /* width: 50% !important; */
+    /* max-width: 100%; */
+    max-width: 185px;
+  }
+
+  .banner-overlay {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    gap: 0px;
+  }
+
+  .section-title {
+    font-size: 22px;
+  }
+
+  .header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .header img {
+    max-width: 120px;
+    height: auto;
+  }
+
+  .header nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+
+  .header button {
+    font-size: 14px;
+    padding: 6px 10px;
+    margin: 4px;
+    /* border-radius: 6px; */
+  }
+}
+
+
+

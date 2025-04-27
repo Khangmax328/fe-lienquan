@@ -1,0 +1,76 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 30px;
+    background-color: white;
+    /* box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);   */
+  }
+  
+  .logo {
+    height: 50px;
+  }
+  
+  .header-center {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .nav-item {
+    font-weight: bold;
+    color: #d70000;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+  
+  .nav-item:hover {
+    color: white;
+    background-color: #d70000;
+    box-shadow: 0 2px 8px rgba(215, 0, 0, 0.3);
+  }
+  
+  .hidden {
+    visibility: hidden; /* Giữ vị trí trên giao diện */
+  }
+  
+  .header-right button {
+    padding: 8px 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    margin-left: 10px;
+    cursor: pointer;
+    background: linear-gradient(to bottom, #e53935, #b71c1c);
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  .header-right button:hover {
+    background: linear-gradient(to bottom, #c62828, #8e0000);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .manage-btn {
+    padding: 8px 16px !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-radius: 6px !important;
+    color: white !important;
+    margin-left: 10px !important;
+    cursor: pointer !important;
+    background: linear-gradient(to bottom, #4caf50, #2e7d32) !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+  }
+  
+  .manage-btn:hover {
+    background: linear-gradient(to bottom, #388e3c, #1b5e20) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+  

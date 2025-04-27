@@ -1,0 +1,959 @@
+/* AdminDashboard.css */
+.admin-container {
+  display: flex;
+  min-height: 100vh;
+  background: #f9f9f9;
+}
+
+.sidebar {
+  width: 250px;
+  background: white;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+.sidebar h3.active-tab {
+  background-color: #f2f2f2;
+  color: #e60023; /* đỏ đậm */
+  font-weight: bold;
+  padding: 10px;
+  border-left: 5px solid #e60023;
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+.heading-section {
+  border-left: 6px solid red; /* màu xanh dương chủ đạo */
+  padding-left: 12px;
+  margin-bottom: 20px;
+  color: #333;
+  font-weight: 700;
+  font-size: 24px;
+  color: green
+  
+}
+.sidebar h3 {
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  text-decoration: none; /* tắt gạch chân */
+}
+
+.sidebar h3:hover {
+  transform: scale(1.05); /* hiệu ứng phóng to */
+  background-color: #f8f8f8; /* nền nhè nhẹ khi hover */
+  text-decoration: none;
+}
+
+.sidebar p {
+  font-size: 13px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px 30px;
+}
+
+.revenue-box {
+  background: #fff8e1;
+  border: 1px solid #ffd54f;
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.header-section {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 20px;
+}
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap; /* cho responsive */
+}
+.create-btn {
+  padding: 8px 16px;
+  background: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-btn:hover {
+  background: #1b5e20;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+}
+
+table th,
+table td {
+  /* border: 1px solid #ddd; */
+  padding: 8px;
+  color: #000;          /* 🔴 màu chữ đen */
+  font-weight: normal;  /* 🔴 bỏ in đậm */
+  text-align: center;
+}
+
+table th {
+  background-color: #f5f5f5;
+  font-weight: bold;    /* Nếu vẫn muốn header in đậm thì giữ dòng này */
+}
+
+
+td button {
+  margin-right: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+td button:first-child {
+  background-color: #0277bd;
+  color: white;
+  cursor: pointer !important;
+}
+
+td button:last-child {
+  background-color: #d32f2f;
+  color: white;
+}
+
+td button:hover {
+  opacity: 0.9;
+  
+}
+.confirm-modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.confirm-box {
+  background: #fff;
+  padding: 20px 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: center;   /* canh giữa */
+  gap: 3px;                  /* giảm khoảng cách */
+  margin-top: 16px;
+}
+
+
+.btn-ok {
+  background-color: red;
+  color: white;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-cancel {
+  background-color: #ccc;
+  color: black;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  
+}
+.confirm-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.confirm-box {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  margin: 10px 8px;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.modal-actions .btn-ok {
+  background-color: #e63946;
+  color: white;
+}
+
+.modal-actions .btn-cancel {
+  background-color: #ddd;
+  color: black;
+}
+
+.modal-actions .btn-ok:hover {
+  background-color: #c92c3c;
+}
+
+.modal-actions .btn-cancel:hover {
+  background-color: #bbb;
+}
+
+/* Toast Message */
+.toast-message {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background-color: #38b000;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 5px;
+  z-index: 1000;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.edit-modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999;
+}
+.edit-box {
+  position: relative;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+.edit-box input {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.toast-success {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+  z-index: 9999;
+  animation: fadeInOut 1.5s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+.edit-box {
+  background: white;
+  padding: 24px;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 500px; /* ✅ Không cho rộng quá */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.edit-box::-webkit-scrollbar {
+  width: 0; /* Ẩn thanh cuộn trên Chrome */
+}
+
+.edit-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.edit-box h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+}
+.edit-box input,
+.edit-box select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fdfdfd;
+}
+
+.edit-box input:focus,
+.edit-box select:focus {
+  border-color: #5c8df6;
+  box-shadow: 0 0 0 3px rgba(92, 141, 246, 0.3);
+  background-color: #fff;
+}
+
+.edit-box label {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px; /* khoảng cách dưới label */
+  margin-top: 14px;
+  padding-left: 2px;
+}
+.edit-box input,
+.edit-box select {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.2s ease;
+  background: #fdfdfd;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.btn-ok, .btn-cancel {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-ok {
+  background-color: #f44336;
+  color: white;
+}
+
+.btn-cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+.edit-box, 
+.edit-box input, 
+.edit-box select, 
+.edit-box textarea {
+  box-sizing: border-box;
+}
+/* Label đẹp hơn */
+.filter-label {
+  font-weight: 600;
+  font-size: 15px;
+  margin-right: 1px;
+  color: #222;
+}
+
+/* Select dropdown hiện đại */
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-color: #fff;
+  transition: border-color 0.3s;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #e53935; /* đỏ chủ đạo */
+  box-shadow: 0 0 0 2px rgba(229, 57, 53, 0.2);
+}
+
+
+.add-type-wrapper {
+  margin-top: 12px;
+  padding: 10px;
+  background: #f9f9f9;
+  border: 1px dashed #999;
+  border-radius: 6px;
+}
+
+.add-type-wrapper input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+.add-type-wrapper button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-type-wrapper button:hover {
+  background-color: #218838;
+}
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  font-size: 22px;
+  font-weight: bold;
+  color: #555;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.modal-close:hover {
+  transform: scale(1.2);
+  color: #f00;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  padding-right: 30px;
+  font-size: 16px;
+}
+
+.pagination-controls button {
+  padding: 6px 12px;
+  margin: 0 6px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.pagination-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px;
+  padding-right: 30px;
+  font-size: 16px;
+}
+
+.pagination-controls button {
+  padding: 6px 12px;
+  margin: 0 6px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-controls button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.filter-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.filter-select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.search-username {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 200px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.search-username:focus {
+  border-color: #007bff;
+  outline: none;
+}
+.filter-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.filter-row input,
+.filter-row select {
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.revenue-summary {
+  background-color: #f0f9ff;
+  padding: 16px;
+  border-left: 6px solid #007bff;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.revenue-summary p {
+  margin: 4px 0;
+  font-size: 18px;
+  color: red;
+
+}
+
+.revenue-summary strong {
+  color: #007bff;
+}
+/* .revenue-summary {
+  background-color: #fffbe6;
+  border-left: 5px solid #ffa500;
+  padding: 16px;
+  margin-bottom: 20px;
+  border-radius: 6px;
+} */
+.fullscreen-spinner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner {
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #e91e63;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner-center {
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid crimson;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  margin: auto;
+}
+
+.confirm-box.loading-only {
+  width: 80px;
+  height: 80px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.3);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid red;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.edit-payment-box {
+  position: relative;
+  width: 90%;
+  margin: 30px auto;
+  padding: 20px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+
+.edit-payment-box h3 {
+  text-align: center;
+  font-size: 22px;
+  color: red;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+
+.edit-payment-box label {
+  font-weight: 600;
+  display: block;
+  margin: 10px 0 6px;
+}
+
+.edit-payment-box input {
+  width: 93%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.edit-payment-box .modal-actions {
+  display: flex;
+  /* justify-content: space-between; */
+  margin-top: 15px;
+}
+
+.edit-payment-box .btn-ok {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.edit-payment-box .btn-cancel {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Mặc định ẩn sidebar trên màn hình nhỏ */
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+    position: fixed;
+    top: 60px; /* dưới header */
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: white;
+    z-index: 1000;
+    border-right: 1px solid #ddd;
+    padding: 20px;
+    overflow-y: auto;
+    margin-top: 9px;
+  }
+  .menu-toggle1 {
+    display: block;
+    background: #e60023;
+    color: white;
+    border: none;
+    font-size: 18px;
+    padding: 10px 15px;
+    margin-bottom: 3px;
+    margin-top: 3px;
+    border-radius: 5px;
+    width: 100px;
+  }
+  .sidebar.show {
+    display: block;
+  }
+  .menu-toggle {
+    display: none;
+  }
+  .header-section {
+    display: inline;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    gap: 2px;
+  }
+  .create-btn {
+    padding: 8px 16px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    gap:10px  !important
+  }
+  .action-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* cho responsive */
+  }
+  .heading-section {
+    border-left: 6px solid red; /* màu xanh dương chủ đạo */
+    padding-left: 12px;
+    margin-bottom: 20px;
+    color: #333;
+    font-weight: 700;
+    font-size: 15px;
+    color: green;
+    
+  }
+  .search-username {
+    padding: 6px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 250px;
+    font-size: 14px;
+    transition: border-color 0.2s ease;
+  }
+  .filter-row {
+    flex-direction: column;   /* dọc thay vì ngang */
+    align-items: stretch;     /* full chiều ngang */
+    gap: 8px;                 /* giảm khoảng cách chút cho mobile */
+  }
+
+  .pagination-controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+    padding-right: 0px;
+    font-size: 16px;
+  }
+  .pagination-controls button {
+    padding: 6px 12px;
+    margin: 0 0px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  .filter-row .filter-label {
+    align-self: flex-start;
+    font-size: 15px;
+  }
+  
+.filter-row select {
+  width: 170px;           /* chiếm toàn bộ chiều ngang */
+  padding: 6px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.accounts-table{
+  /* width: 414px; */
+}
+.filter-row input{
+  width: 156px;
+}
+.main-content{
+  /* padding: 1px 5px; */
+  height: 400px;
+}
+.edit-box {
+  position: relative;
+  background: white;
+  padding: 20px;
+  border-radius: 0px;
+  width: 384px;
+}
+
+.payment-box {
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.15);
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* CĂN GIỮA NỘI DUNG */
+  text-align: center; /* CĂN GIỮA TEXT */
+}
+.admin-container {
+  /* display: flex; */
+  min-height: 80vh;
+  background: #f9f9f9;
+}
+.edit-payment-box h3 {
+  text-align: center;
+  font-size: 22px;
+  color: red;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
+.edit-payment-box .p {
+  
+  color: red;
+ 
+}
+
+.edit-payment-box label {
+  font-weight: 600;
+  display: block;
+  margin: 10px 0 6px;
+}
+
+.edit-payment-box input {
+  width: 93%;
+  padding: 8px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.edit-payment-box .modal-actions {
+  display: flex;
+  /* justify-content: space-between; */
+  margin-top: 15px;
+}
+
+.edit-payment-box .btn-ok {
+  background-color: #28a745;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  
+}
+
+.edit-payment-box .btn-cancel {
+  background-color: #6c757d;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+ 
+
+
+
+.users-table td,
+.users-table th {
+  display: none;
+}
+
+.users-table td.user-stt,
+.users-table td.user-email,
+.users-table td.user-balance,
+.users-table td.user-action,
+.users-table th.user-stt,
+.users-table th.user-email,
+.users-table th.user-balance,
+.users-table th.user-action {
+  display: table-cell;
+}
+  .accounts-table th:not(:nth-child(1)):not(:nth-child(10)):not(:nth-child(11)):not(:nth-child(12)):not(:nth-child(13)),
+  .accounts-table td:not(:nth-child(1)):not(:nth-child(10)):not(:nth-child(11)):not(:nth-child(12)):not(:nth-child(13)) {
+    display: none;
+  }
+
+  /* Người dùng: chỉ hiển thị STT, Email, Số dư, Hành động */
+  .users-table td:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)),
+  .users-table th:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)) {
+    /* display: none; */
+  }
+  
+}
+
+/* Trên desktop: ẩn toggle */
+
+
+
+

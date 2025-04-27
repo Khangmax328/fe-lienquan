@@ -1,0 +1,210 @@
+    /* ===== CATEGORY PAGE STYLES ===== */
+
+    .category-page-container {
+      padding: 30px 0;
+      margin: auto;
+      background-color: #fff;
+    }
+    .lucky-description {
+      background: #e0f4ff;
+      padding: 12px 18px;
+      border-left: 6px solid #007bff;
+      margin-top: 2px;
+      /* border-radius: 6px; */
+      font-size: 15px;
+      color: #333;
+    }
+    
+    .lucky-description p {
+      margin: 4px 0;
+      color: #327ad5;
+    }
+    
+    .category-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .filter-container {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0;
+      align-items: center;
+      justify-content: flex-start;
+      margin-left: 30px;
+    }
+    
+    .filter-container input,
+    .filter-container select {
+      padding: 8px 12px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      min-width: 160px;
+    }
+    
+    .filter-container button {
+      padding: 8px 16px;
+      font-size: 14px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    
+    .filter-container button:hover {
+      background-color: #125aa1;
+    }
+        
+    /* Tiêu đề danh sách acc */
+    @media (max-width: 1280px) {
+      .category-header-narrow {
+        padding: 0 10px; /* để không dính sát viền khi thu nhỏ */
+      }
+    }
+    .category-header-narrow {
+      width: 100%;
+      max-width: 1180px; /* 5 cards * 220px + 4 * 20px gap */
+      margin: 0 auto 30px auto;
+    }
+        
+
+    .category-title {
+      position: relative;
+      background: linear-gradient(to right, #e0f7ff, #e0f7ff);
+
+      color: #0051ff;
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      padding: 20px 0;
+      margin: 0;
+      text-transform: uppercase;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .category-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background-color: #0051ff;
+      margin: 12px auto 0;
+      border-radius: 10px;
+      animation: expandLine 0.6s ease-out forwards;
+    }
+
+    @keyframes expandLine {
+      from {
+        width: 0;
+        opacity: 0;
+      }
+      to {
+        width: 80px;
+        opacity: 1;
+      }
+    }
+
+    /* Dành riêng cho phần header chung nếu có */
+    .category-header {
+      background: linear-gradient(to right, #ffffff, #f0f2f5);
+      padding: 24px 0;
+      text-align: center;
+      border-bottom: 2px solid #e60000;
+      margin-bottom: 30px;
+    }
+
+    /* ===== ACCOUNT CARD STYLES ===== */
+
+    .category-card {
+      width: 250px;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-image {
+      width: 100%;
+      height: 160px;
+      object-fit: fill;
+    }
+
+    .card-name {
+      font-weight: bold;
+      color: #e60000;
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+
+    .card-count {
+      font-size: 14px;
+      color: #444;
+      margin: 4px 0 12px;
+    }
+
+    .btn-view {
+      background-color: #e60000;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    @media screen and (max-width: 480px) {
+      .card-grid {
+        /* grid-template-columns: 1fr; */
+      }
+    
+      .top-buyers-box, .banner-right-image {
+        width: 100%;
+      }
+    
+      .category-card {
+        padding: 0;
+        height: 286px;
+        border-radius: 0px;
+    }
+    }
+    @media screen and (max-width: 768px) {
+      .category-title {
+        position: relative;
+        background: linear-gradient(to right, #e0f7ff, #e0f7ff);
+  
+        color: #0051ff;
+        text-align: center;
+        font-size: 23px;
+        font-weight: 700;
+        padding: 20px 0;
+        margin: 0;
+        text-transform: uppercase;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .filter-container {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 20px 0;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 10px !important;
+        
+      }
+      
+    }
