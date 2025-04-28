@@ -94,3 +94,70 @@
     margin: 4px 0;
     font-size: 14px;
   }
+  @media (max-width: 768px) {
+    .product-card {
+      width: 99%;
+      max-width: 499px;
+    }
+    .product-list {
+      display: flex ;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px 20px;
+      /* justify-content: flex-start; */
+      /* border: 2px dashed blue; */
+    }
+    .product-card .footer {
+      margin-top: auto;
+      padding: 10px;
+      display: flex ;
+      justify-content: space-between;
+      align-items: center;
+  }
+  
+  
+  .footer {
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .price-box, .footer button {
+    flex: 1;
+    padding: 12px 0;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 0;
+  }
+  
+  /* ĐẶC BIỆT ❗: thêm display: flex vào price-box luôn */
+  .price-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid red;
+    color: red;
+    background: white;
+  }
+  
+  /* Nút CHI TIẾT */
+  .footer button {
+    
+    border: 2px solid red !important;
+    background-color: #e53935;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .footer button:hover {
+    background-color: #c62828;
+  }
+  
+  
+  }
+  

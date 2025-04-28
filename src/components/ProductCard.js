@@ -16,6 +16,7 @@ function ProductCard({ account }) {
   };
 
   return (
+    <>
     <div className="product-card">
       <img src={imgUrl} alt={account.name} />
       <h3>{account.name}</h3>
@@ -43,6 +44,7 @@ function ProductCard({ account }) {
         <button onClick={handleViewDetails}>CHI TIẾT</button>
       </div>
     </div>
+    </>
   );
 }
 

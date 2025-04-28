@@ -31,7 +31,9 @@
     .footer {
       background-color: #f5f5f5;
       padding: 10px 40px;
-      margin-top: 5px;
+      margin-top: 5px;  
+      align-items: center;
+      /* flex-shrink: 0; */
   }
     .footer-content {
       flex-direction: column;
