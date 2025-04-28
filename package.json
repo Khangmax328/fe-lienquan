@@ -2,6 +2,7 @@
   "name": "shop-lien-quan",
   "version": "0.1.0",
   "private": true,
+  "homepage": "./",
   "dependencies": {
     "@reduxjs/toolkit": "^2.7.0",
     "@tanstack/react-query": "^5.74.4",
