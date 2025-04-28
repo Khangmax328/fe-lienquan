@@ -4,10 +4,11 @@ import * as UserService from '../services/UserService'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
+import './ChangePasswordPage.css'
 
 const ChangePasswordPage = () => {
   const user = useSelector((state) => state.user)
-
+  const [loading, setLoading] = useState(false)
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -16,11 +17,13 @@ const ChangePasswordPage = () => {
 
   const handleChangePassword = async (e) => {
     e.preventDefault()
-
+  
     if (newPassword !== confirmPassword) {
       return setMessage('Mật khẩu xác nhận không khớp!')
     }
-
+  
+    setLoading(true) // 👉 Bắt đầu loading
+  
     try {
       const token = user?.access_token
       await UserService.updatePassword({ oldPassword, newPassword }, token)
@@ -33,7 +36,10 @@ const ChangePasswordPage = () => {
       setSuccess(false)
       setMessage(error?.response?.data?.message || 'Lỗi đổi mật khẩu!')
     }
+  
+    setLoading(false) // 👉 Tắt loading
   }
+  
 
   return (
     <>
@@ -63,8 +69,8 @@ const ChangePasswordPage = () => {
 
         <form onSubmit={handleChangePassword}>
           <div style={{ marginBottom: '15px' }}>
-            <label>Mật khẩu cũ:</label>
-            <input
+            <label >Mật khẩu cũ:</label>
+            <input className='labelcss'
               type="password"
               value={oldPassword}
               onChange={(e) => setOldPassword(e.target.value)}
@@ -75,8 +81,8 @@ const ChangePasswordPage = () => {
           </div>
 
           <div style={{ marginBottom: '15px' }}>
-            <label>Mật khẩu mới:</label>
-            <input
+            <label >Mật khẩu mới:</label>
+            <input className='labelcss'
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
@@ -88,7 +94,7 @@ const ChangePasswordPage = () => {
 
           <div style={{ marginBottom: '15px' }}>
             <label>Xác nhận:</label>
-            <input
+            <input className='labelcss'
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -98,9 +104,10 @@ const ChangePasswordPage = () => {
             />
           </div>
 
-          <button type="submit" style={buttonStyle}>
-            ĐỔI MẬT KHẨU
+          <button type="submit" style={buttonStyle} disabled={loading}>
+            {loading ? <div className="spinner"></div> : 'ĐỔI MẬT KHẨU'}
           </button>
+
         </form>
       </div>
     </div>
@@ -110,7 +117,7 @@ const ChangePasswordPage = () => {
 }
 
 const inputStyle = {
-  width: '100%',
+  width: '93%',
   padding: '10px',
   marginTop: '5px',
   borderRadius: '4px',

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './AdminDashboard.css';
-import axios from 'axios';
+
 import * as AccountService from '../services/AccountService';
 import * as UserService from '../services/UserService';
 import * as uploadService from '../services/uploadService';
 
 import { useSelector } from 'react-redux';
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+
 import * as CategoryService from '../services/CategoryService'
 import api from '../services/api'
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 function AdminDashboard() {
   const [showDeletePaymentConfirm, setShowDeletePaymentConfirm] = useState(false);
@@ -1184,8 +1184,6 @@ style={{cursor: 'pointer'}}
   </div>
 )}
 
-
-
 {showUserConfirm && (
   <div className="confirm-modal">
     <div className="confirm-box">
@@ -1263,13 +1261,12 @@ style={{cursor: 'pointer'}}
   </div>
 )}
 
-
 {toastMessage && (
   <div className="toast-message">{toastMessage}</div>
 )}
-    
-{/* <Footer/> */}
-    </>
+  <Footer/>
+
+</>
   );
 }
 
