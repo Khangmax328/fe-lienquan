@@ -114,7 +114,7 @@ const Navbar = () => {
       {isMobile && menuOpen && (
         <nav ref={dropdownRef} className="dropdown-menu">
           <Link to="/home">TRANG CHỦ</Link>
-          <Link to="/transactions">LỊCH SỬ GIAO DỊCH</Link>
+          {/* <Link to="/transactions">LỊCH SỬ GIAO DỊCH</Link> */}
           <Link to="/banking">NẠP ATM - VÍ</Link>
           <Link to="/order-history">LỊCH SỬ MUA</Link>
           {(user?.isAdmin && location.pathname !== '/admin') && (

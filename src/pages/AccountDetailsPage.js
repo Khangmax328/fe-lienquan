@@ -90,7 +90,7 @@ const AccountDetailsPage = () => {
 
         <div className="account-buttons">
           <button className="buy-now" onClick={handleBuyNow}>MUA NGAY</button>
-          <button className="buy-wallet">MUA BẰNG VÍ ĐIỆN TỬ</button>
+          {/* <button className="buy-wallet">MUA BẰNG VÍ ĐIỆN TỬ</button> */}
         </div>
 
         <div className="account-image-section">

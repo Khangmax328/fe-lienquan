@@ -1267,9 +1267,9 @@ style={{cursor: 'pointer'}}
 {toastMessage && (
   <div className="toast-message">{toastMessage}</div>
 )}
-    <Footer />
-    </>
     
+{/* <Footer/> */}
+    </>
   );
 }
 

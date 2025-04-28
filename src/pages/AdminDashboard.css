@@ -949,7 +949,10 @@ td button:hover {
   .users-table th:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)) {
     /* display: none; */
   }
-  
+  .accounts-table th:nth-child(12),
+.accounts-table td:nth-child(12) {
+  display: none;
+}
 }
 
 /* Trên desktop: ẩn toggle */

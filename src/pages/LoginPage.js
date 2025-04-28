@@ -43,7 +43,7 @@ const LoginPage = () => {
       <Navbar />
       <div className="login-container">
         <h2>Đăng nhập hệ thống</h2>
-        {errorMessage && <div className="login-error">{errorMessage}</div>}
+        {errorMessage && <div style={{color: 'red',fontWeight:'bold'}} className="login-error">{errorMessage}</div>}
 
         <form onSubmit={handleSubmit} className="login-form">
           <input
