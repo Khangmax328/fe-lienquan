@@ -1,4 +1,3 @@
-// src/pages/AccountDetailsPage.js
 import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -18,7 +17,6 @@ const AccountDetailsPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const user = useSelector((state) => state.user)
-  // console.log("🧪 Token từ Redux:", user?.access_token)
 
   const { data: account, isLoading } = useQuery({
     queryKey: ['account-details', id],
@@ -27,7 +25,6 @@ const AccountDetailsPage = () => {
   })
 
   const handleBuyNow = async () => {
-    // 👉 Nếu chưa đăng nhập
     if (!user?.access_token) {
       Swal.fire({
         icon: 'warning',
@@ -40,7 +37,6 @@ const AccountDetailsPage = () => {
       return
     }
   
-    // 👉 Đã đăng nhập → Xác nhận mua
     const result = await Swal.fire({
       title: 'Xác nhận mua',
       text: `Bạn chắc chắn muốn mua acc này với giá ${account.price.toLocaleString()}đ?`,
@@ -65,26 +61,28 @@ const AccountDetailsPage = () => {
       }
     }
   }
-  
-  
 
   if (isLoading) return <div>Loading...</div>
   if (!account) return <div>Không tìm thấy tài khoản</div>
 
+  // 🛠 Hàm kiểm tra để hiện "Bí mật" nếu cần
+  const displayValue = (value) => {
+    return value === 0 || value === '' ? 'Bí mật' : value;
+  };
+
   return (
     <div>
-      {/* <Header /> */}
       <Navbar/>
       <div className="account-details-container">
         <h1 className="account-title">THÔNG TIN TÀI KHOẢN</h1>
         <p className="account-id">#{account._id}</p>
 
         <div className="account-info">
-          <div className="account-info-item">Nick <span>{account.name}</span></div>
-          <div className="account-info-item">Rank <span>{account.rank}</span></div>
-          <div className="account-info-item">Tướng <span>{account.champions}</span></div>
-          <div className="account-info-item">Trang phục <span>{account.skins}</span></div>
-          <div className="account-info-item">Ngọc <span>{account.gems}</span></div>
+          <div className="account-info-item">Nick <span>{displayValue(account.name)}</span></div>
+          <div className="account-info-item">Rank <span>{displayValue(account.rank)}</span></div>
+          <div className="account-info-item">Tướng <span>{displayValue(account.champions)}</span></div>
+          <div className="account-info-item">Trang phục <span>{displayValue(account.skins)}</span></div>
+          <div className="account-info-item">Ngọc <span>{displayValue(account.gems)}</span></div>
         </div>
 
         <div className="account-price">GIÁ: {account.price.toLocaleString()} ₫</div>
@@ -92,7 +90,7 @@ const AccountDetailsPage = () => {
 
         <div className="account-buttons">
           <button className="buy-now" onClick={handleBuyNow}>MUA NGAY</button>
-          <button className="buy-wallet">MUA BẰNG VÍ ĐIỆN TỮ</button>
+          <button className="buy-wallet">MUA BẰNG VÍ ĐIỆN TỬ</button>
         </div>
 
         <div className="account-image-section">

@@ -62,7 +62,7 @@ function AllAccountsPage() {
           <div className="category-header-narrow">
             <h1 className="category-title">Danh Sách Tất Cả Tài Khoản</h1>
             </div>
-            <div style={{padding:'0', marginLeft:'50px'}} className="filter-container">
+            <div  className="filter-container">
               <input
                 type="number"
                 placeholder="Giá tối thiểu"

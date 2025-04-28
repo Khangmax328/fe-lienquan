@@ -12,6 +12,7 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false) // ✅ Thêm loading
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -22,19 +23,21 @@ const SignUpPage = () => {
     }
 
     try {
-      const res = await registerUser({ username, email, password, confirmPassword }) // ✅ FIXED
-
+      setIsLoading(true) // 👉 bật loading
+      const res = await registerUser({ username, email, password, confirmPassword })
       Swal.fire('Thành công', 'Tạo tài khoản thành công!', 'success')
-      navigate('/login') // ✅ Điều hướng về login
+      navigate('/login')
     } catch (err) {
       Swal.fire('Lỗi', err?.response?.data?.message || 'Lỗi khi đăng ký', 'error')
+    } finally {
+      setIsLoading(false) // 👉 tắt loading
     }
   }
 
   return (
     <>
       {/* <Header /> */}
-      <Navbar/>
+      <Navbar />
       <div className="signup-container">
         <h2>Đăng ký thành viên</h2>
         <form onSubmit={handleSubmit} className="signup-form">
@@ -67,7 +70,13 @@ const SignUpPage = () => {
             required
           />
 
-          <button type="submit" className="btn-signup">Đăng ký</button>
+          <button type="submit" className="btn-signup" disabled={isLoading}>
+            {isLoading ? (
+              <div className="spinner"></div> // 👉 Nếu loading thì hiện spinner
+            ) : (
+              'Đăng ký'
+            )}
+          </button>
 
           <div className="signup-separator">- Bạn đã có tài khoản -</div>
           <button type="button" className="btn-register" onClick={() => navigate('/login')}>

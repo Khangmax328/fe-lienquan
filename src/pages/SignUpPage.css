@@ -16,7 +16,7 @@
   }
   
   .signup-form input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 12px;
     border: 1px solid #ccc;
@@ -43,4 +43,37 @@
     margin: 20px 0;
     color: #888;
   }
+  .spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid #ccc;
+    border-top-color: #e60000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: auto;
+  }
   
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (max-width: 768px) {
+  .signup-container {
+    width: 90%;
+    padding: 20px;
+    margin: 20px auto;
+  }
+
+  .signup-form input {
+    width: 95%;
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .btn-signup,
+  .btn-register {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
