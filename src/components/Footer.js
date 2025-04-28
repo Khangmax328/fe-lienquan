@@ -1,6 +1,6 @@
 import React from 'react'
 import './Footer.css'
-// import zaloIcon from '../assets/zalo.webp'
+
 
 const Footer = () => {
   return (

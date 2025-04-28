@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '../redux/userSlide'
 import './Navbar.css'
-// import logo from '../assets/logo.png'
+
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
