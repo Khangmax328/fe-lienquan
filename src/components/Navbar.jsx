@@ -3,7 +3,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logoutUser } from '../redux/userSlide'
 import './Navbar.css'
-import logo from '../assets/logo.png'
+// import logo from '../assets/logo.png'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -63,7 +63,7 @@ const Navbar = () => {
           </button>
         )}
         <Link to="/home">
-          <img src={logo} alt="Logo" className="logo" />
+          <img src={process.env.PUBLIC_URL + '/logo.png'} alt="Logo" className="logo" />
         </Link>
       </div>
 

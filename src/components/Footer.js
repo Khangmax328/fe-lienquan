@@ -1,6 +1,6 @@
 import React from 'react'
 import './Footer.css'
-import zaloIcon from '../assets/zalo.webp'
+// import zaloIcon from '../assets/zalo.webp'
 
 const Footer = () => {
   return (
@@ -35,7 +35,7 @@ const Footer = () => {
           rel="noopener noreferrer"
           style={{ marginLeft: '10px' }}
         >
-          <img src={zaloIcon} alt="Zalo" style={{ height: '28px', verticalAlign: 'middle' }} />
+          <img src={process.env.PUBLIC_URL + '/zalo.webp'} alt="Zalo" style={{ height: '28px', verticalAlign: 'middle' }} />
         </a>
       </div>
     </footer>
