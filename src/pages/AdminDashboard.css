@@ -725,17 +725,36 @@ td button:hover {
   .sidebar {
     display: none;
     position: fixed;
-    top: 60px; /* dưới header */
+    top: 47px;
     left: 0;
-    width: 200px;
-    height: 100%;
-    background: white;
+    width: 220px;
+    height: calc(100% - 60px);
+    background: #ffffff;
     z-index: 1000;
-    border-right: 1px solid #ddd;
-    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+    padding: 24px 20px;
     overflow-y: auto;
-    margin-top: 9px;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease-in-out;
+    border-radius: 0 12px 12px 0;
   }
+  
+  .sidebar h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #e60023;
+    border-left: 4px solid #e60023;
+    padding-left: 10px;
+  }
+  
+  .sidebar p {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+    padding-left: 8px;
+  }
+  
   .edit-box label {
     display: block;
     font-size: 15px;
@@ -756,13 +775,21 @@ td button:hover {
     background: #e60023;
     color: white;
     border: none;
-    font-size: 18px;
-    padding: 10px 15px;
-    margin-bottom: 3px;
-    margin-top: 3px;
-    border-radius: 5px;
-    width: 100px;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 18px;
+    margin: 8px 0;
+    border-radius: 8px;
+    width: 120px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: background 0.3s ease, transform 0.2s ease;
   }
+  
+  .menu-toggle1:hover {
+    background: #cc001e;
+    transform: scale(1.02);
+  }
+  
   .sidebar.show {
     display: block;
   }
