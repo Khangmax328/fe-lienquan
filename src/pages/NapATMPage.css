@@ -8,6 +8,14 @@
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   animation: fadeIn 0.4s ease-in;
 }
+.napatm-note {
+  font-size: 10px;        /* nhỏ hơn */
+  font-style: italic;      /* nghiêng */
+  color: #007bff;          /* xanh nhẹ đẹp */
+  display: block;          /* để nó xuống dòng luôn */
+  text-align: center;      /* căn giữa cho đẹp */
+  margin-bottom: 20px;     /* cách dưới cho thoáng */
+}
 
 .napatm-title {
   text-align: center;

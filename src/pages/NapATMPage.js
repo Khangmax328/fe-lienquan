@@ -90,6 +90,8 @@ const NapATMPage = () => {
       <Navbar/>
       <div className="napatm-container">
         <h1 className="napatm-title">NẠP ATM - VÍ</h1>
+        <span style={{fontSize:'12px'}} className="napatm-note">(Hiện tại quý khách nếu cần nạp thẻ cào vui lòng liên hệ Zalo 0946896304, xin cảm ơn!)</span>
+
 
         <div className="napatm-field">
           <label>Số tài khoản:</label>

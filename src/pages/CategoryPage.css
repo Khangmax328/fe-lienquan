@@ -63,11 +63,7 @@
     }
         
     /* Tiêu đề danh sách acc */
-    @media (max-width: 1280px) {
-      .category-header-narrow {
-        padding: 0 10px; /* để không dính sát viền khi thu nhỏ */
-      }
-    }
+   
     .category-header-narrow {
       width: 100%;
       max-width: 1180px; /* 5 cards * 220px + 4 * 20px gap */
@@ -81,7 +77,7 @@
 
       color: #0051ff;
       text-align: center;
-      font-size: 32px;
+      font-size: 20px;
       font-weight: 700;
       padding: 20px 0;
       margin: 0;
@@ -187,7 +183,7 @@
   
         color: #0051ff;
         text-align: center;
-        font-size: 23px;
+        font-size: 20px;
         font-weight: 700;
         padding: 20px 0;
         margin: 0;
@@ -202,6 +198,7 @@
         gap: 12px;
         margin: 20px 0;
         align-items: center;
+        padding: 0;
         justify-content: flex-start;
         /* margin-left: 10px !important; */
         
