@@ -736,6 +736,21 @@ td button:hover {
     overflow-y: auto;
     margin-top: 9px;
   }
+  .edit-box label {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 4px; /* khoảng cách dưới label */
+    margin-top: 14px;
+    padding-left: 2px;
+  }
+  .edit-box input,
+  .edit-box select {
+    font-size: 13px; /* 🔥 chữ nhỏ trong input */
+    padding: 8px 10px; /* 🔥 padding nhỏ hơn */
+    margin-bottom: 10px;
+    margin-top: 3px;
+  }
   .menu-toggle1 {
     display: block;
     background: #e60023;
@@ -843,9 +858,10 @@ td button:hover {
 .edit-box {
   position: relative;
   background: white;
-  padding: 20px;
+  padding: 15px;
+  max-width: 380px;
   border-radius: 0px;
-  width: 384px;
+  width: 90%;
 }
 
 .payment-box {

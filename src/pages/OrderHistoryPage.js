@@ -61,56 +61,60 @@ const OrderHistoryPage = () => {
 
   return (
     <>
-      {/* <Header /> */}
       <Navbar/>
       <div className="order-history-container">
         <h1 className="order-history-title">LỊCH SỬ MUA TÀI KHOẢN</h1>
-        <table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Tài khoản</th>
-              <th>Mật khẩu</th>
-              <th>Mã Authentication</th>
-              <th>Giá</th>
-              <th>Thời gian</th>
-              <th>Chi tiết</th>
-              <th>Xóa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {orders?.length > 0 ? (
-              orders.map((order, index) => (
-                <tr key={order._id}>
-                  <td>{index + 1}</td>
-                  <td>{order?.account?.username}</td>
-                  <td>{order?.account?.password}</td>
-                  <td>{order?.account?.authCode}</td>
-                  <td>{order?.account?.price?.toLocaleString?.() || 0} đ</td>
-                  <td>
-                    {new Date(order?.paidAt).toLocaleTimeString()}<br />
-                    {new Date(order?.paidAt).toLocaleDateString()}
-                  </td>
-                  <td>
-                  <button className="detail-btn" onClick={() => navigate(`/order-details/${order._id}`)}>Chi tiết</button>
 
-                  </td>
-                  <td>
-                    <button className="delete-btn" onClick={() => handleDeleteOrder(order._id)}>Xóa</button>
+        {/* Loading đẹp */}
+        {isLoading ? (
+          <div className="loading-overlay">
+            <div className="spinner"></div>
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tài khoản</th>
+                <th>Mật khẩu</th>
+                <th>Mã Authentication</th>
+                <th>Giá</th>
+                <th>Thời gian</th>
+                <th>Chi tiết</th>
+                <th>Xóa</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.length > 0 ? (
+                orders.map((order, index) => (
+                  <tr key={order._id}>
+                    <td>{index + 1}</td>
+                    <td>{order?.account?.username}</td>
+                    <td>{order?.account?.password}</td>
+                    <td>{order?.account?.authCode}</td>
+                    <td>{order?.account?.price?.toLocaleString?.() || 0} đ</td>
+                    <td>
+                      {new Date(order?.paidAt).toLocaleTimeString()}<br />
+                      {new Date(order?.paidAt).toLocaleDateString()}
+                    </td>
+                    <td>
+                      <button className="detail-btn" onClick={() => navigate(`/order-details/${order._id}`)}>Chi tiết</button>
+                    </td>
+                    <td>
+                      <button className="delete-btn" onClick={() => handleDeleteOrder(order._id)}>Xóa</button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="8" style={{ color: 'gray', fontStyle: 'italic', fontSize: '20px' }}>
+                    Bạn chưa mua tài khoản nào
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="8" style={{ color: 'gray', fontStyle: 'italic', fontSize: '20px' }}>
-                  Bạn chưa mua tài khoản nào
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-
-
+              )}
+            </tbody>
+          </table>
+        )}
       </div>
       <Footer />
     </>

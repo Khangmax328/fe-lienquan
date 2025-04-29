@@ -916,90 +916,112 @@ style={{cursor: 'pointer'}}
     </div>
   </div>
 )}
+
 {showCreateModal && (
   <div className="edit-modal">
-    
     <div className="edit-box">
-    <span className="modal-close" onClick={() => { setShowCreateModal(false) }}>✖</span>
-      <h3 style={{color: 'red', fontWeight:'700', border: '2px solid blue' }}>Tạo tài khoản</h3>
+      <span className="modal-close" onClick={() => setShowCreateModal(false)}>✖</span>
+      <h3 style={{ color: 'red', fontWeight: '700', border: '2px solid blue' }}>Tạo tài khoản</h3>
+
       {toastMessage && (
-  <div className="toast-message">{toastMessage}</div>
-)}
+        <div className="toast-message">{toastMessage}</div>
+      )}
+
       <label>Tên:</label>
       <input value={newAccount.name} onChange={(e) => setNewAccount({ ...newAccount, name: e.target.value })} />
 
-      
+      {/* Chọn loại */}
       <label>Loại:</label>
-      <select style={{cursor: 'pointer'}}   
-  value={newAccount.type}
-  onChange={(e) => {
-    const value = e.target.value
-    if (value === '__new') {
-      setShowAddType(true)
-      setNewAccount({ ...newAccount, type: '' })
-    } else {
-      setShowAddType(false)
-      setNewAccount({ ...newAccount, type: value })
-    }
-  }}
->
-  <option value="">-- Chọn loại --</option>
-  {typeList.map((type) => (
-    <option style={{cursor: 'pointer'}}  key={type._id} value={type._id}>{type.name}</option>
-  ))}
-  {/* <option value="__new">➕ Thêm loại mới</option> */}
-</select>
+      <select
+        style={{ cursor: 'pointer' }}
+        value={newAccount.type}
+        onChange={(e) => {
+          const selectedTypeId = e.target.value
+          const selectedType = typeList.find((type) => type._id === selectedTypeId)
 
-{showAddType && (
-  <div style={{ marginTop: '10px' }}>
-    <label>Nhập loại mới:</label>
-    <input
-      style={{ width: '100%', marginBottom: '6px' }}
-      value={newTypeName}
-      onChange={(e) => setNewTypeName(e.target.value)}
-      placeholder="Ví dụ: Acc VIP SIÊU CẤP"
-    />
-    <button
-      style={{
-        backgroundColor: 'green',
-        color: 'white',
-        padding: '6px 12px',
-        borderRadius: '4px',
-        border: 'none',
-        cursor: 'pointer'
-      }}
-      onClick={async () => {
-        try {
-          const formData = new FormData();
-          formData.append('name', newTypeName);
-          formData.append('image', newCategoryImage); // gửi thẳng file
-      
-          const res = await api.post('/categories', formData, {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              Authorization: `Bearer ${user.access_token}`,
-            },
-          });
-      
-          setTypeList((prev) => [...prev, res.data.category]);
-          setNewTypeName('');
-          setNewCategoryImage(null);
-          setToastMessage('✅ Thêm loại thành công');
-        } catch (err) {
-          setToastMessage('❌ Lỗi khi thêm loại');
-          console.error(err);
-        }
-      }}
-      
-      
-      
-    >
-      Tạo loại
-    </button>
-  </div>
-)}
+          if (selectedType?.name) {
+            let updatedAccount = { ...newAccount, type: selectedTypeId }
+            const name = selectedType.name.toLowerCase()
 
+            if (name.includes('thử vận may 20k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 20000 }
+            } else if (name.includes('thử vận may 50k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 50000 }
+            } else if (name.includes('thử vận may 100k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 100000 }
+            } else if (name.includes('thử vận may 200k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 200000 }
+            } else if (name.includes('thử vận may 300k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 300000 }
+            } else if (name.includes('thử vận may 500k')) {
+              updatedAccount = { ...updatedAccount, champions: 0, skins: 0, gems: 0, price: 500000 }
+            }
 
+            setShowAddType(false)
+            setNewAccount(updatedAccount)
+          } else {
+            if (selectedTypeId === '__new') {
+              setShowAddType(true)
+              setNewAccount({ ...newAccount, type: '' })
+            } else {
+              setShowAddType(false)
+              setNewAccount({ ...newAccount, type: selectedTypeId })
+            }
+          }
+        }}
+      >
+        <option value="">-- Chọn loại --</option>
+        {typeList.map((type) => (
+          <option key={type._id} value={type._id}>{type.name}</option>
+        ))}
+      </select>
+
+      {/* Thêm loại mới nếu cần */}
+      {showAddType && (
+        <div style={{ marginTop: '10px' }}>
+          <label>Nhập loại mới:</label>
+          <input
+            style={{ width: '100%', marginBottom: '6px' }}
+            value={newTypeName}
+            onChange={(e) => setNewTypeName(e.target.value)}
+            placeholder="Ví dụ: Acc VIP SIÊU CẤP"
+          />
+          <button
+            style={{
+              backgroundColor: 'green',
+              color: 'white',
+              padding: '6px 12px',
+              borderRadius: '4px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
+            onClick={async () => {
+              try {
+                const formData = new FormData();
+                formData.append('name', newTypeName);
+                formData.append('image', newCategoryImage);
+
+                const res = await api.post('/categories', formData, {
+                  headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: `Bearer ${user.access_token}`,
+                  },
+                });
+
+                setTypeList((prev) => [...prev, res.data.category]);
+                setNewTypeName('');
+                setNewCategoryImage(null);
+                setToastMessage('✅ Thêm loại thành công');
+              } catch (err) {
+                setToastMessage('❌ Lỗi khi thêm loại');
+                console.error(err);
+              }
+            }}
+          >
+            Tạo loại
+          </button>
+        </div>
+      )}
 
       <label>Giá:</label>
       <input type="number" value={newAccount.price} onChange={(e) => setNewAccount({ ...newAccount, price: e.target.value })} />
@@ -1013,8 +1035,22 @@ style={{cursor: 'pointer'}}
       <label>Ngọc:</label>
       <input type="number" value={newAccount.gems} onChange={(e) => setNewAccount({ ...newAccount, gems: e.target.value })} />
 
+      {/* Rank sửa thành select */}
       <label>Rank:</label>
-      <input value={newAccount.rank} onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })} />
+      <select
+        style={{ cursor: 'pointer' }}
+        value={newAccount.rank}
+        onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })}
+      >
+        <option value="">-- Chọn rank --</option>
+        <option value="Bạc">Bạc</option>
+        <option value="Vàng">Vàng</option>
+        <option value="Bạch Kim">Bạch Kim</option>
+        <option value="Kim Cương">Kim Cương</option>
+        <option value="Tinh Anh">Tinh Anh</option>
+        <option value="Cao Thủ">Cao Thủ</option>
+        <option value="Thách Đấu">Thách Đấu</option>
+      </select>
 
       <label>Username:</label>
       <input value={newAccount.username} onChange={(e) => setNewAccount({ ...newAccount, username: e.target.value })} />
@@ -1026,41 +1062,33 @@ style={{cursor: 'pointer'}}
       <input value={newAccount.authCode} onChange={(e) => setNewAccount({ ...newAccount, authCode: e.target.value })} />
 
       <label>Ảnh đại diện:</label>
-        <input
-          type="file"
-          onChange={(e) => setNewAccount({ ...newAccount, image: e.target.files[0] })}
-        />
-        <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
-          (Ảnh này sẽ là ảnh đại diện acc sau khi tạo)
-        </p>
+      <input type="file" onChange={(e) => setNewAccount({ ...newAccount, image: e.target.files[0] })} />
+      <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
+        (Ảnh này sẽ là ảnh đại diện acc sau khi tạo)
+      </p>
 
-        <label>Ảnh chi tiết (nhiều):</label>
-        <input
-          type="file"
-          multiple
-          onChange={(e) => setNewAccount({ ...newAccount, images: Array.from(e.target.files) })}
-        />
-        <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
-          (Các ảnh này sẽ được hiển thị ở phần chi tiết tài khoản)
-        </p>
-
-
+      <label>Ảnh chi tiết (nhiều):</label>
+      <input type="file" multiple onChange={(e) => setNewAccount({ ...newAccount, images: Array.from(e.target.files) })} />
+      <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
+        (Các ảnh này sẽ được hiển thị ở phần chi tiết tài khoản)
+      </p>
 
       <div className="modal-actions">
-      <button
-        style={{ marginRight: '-10px' }}
-        className="btn-ok"
-        onClick={handleCreateAccount}
-        disabled={isCreating}
-      >
-        {isCreating ? 'Đang tạo...' : 'Tạo'}
-      </button>
-
+        <button
+          style={{ marginRight: '-10px' }}
+          className="btn-ok"
+          onClick={handleCreateAccount}
+          disabled={isCreating}
+        >
+          {isCreating ? 'Đang tạo...' : 'Tạo'}
+        </button>
         <button className="btn-cancel" onClick={() => setShowCreateModal(false)}>Huỷ</button>
       </div>
     </div>
   </div>
 )}
+
+
 {showCategoryManager && (
   <div className="edit-modal">
     

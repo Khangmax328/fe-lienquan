@@ -14,6 +14,7 @@ function LandingPage() {
   const [accounts, setAccounts] = useState([])
   const [nonLuckAccounts, setNonLuckAccounts] = useState([])
   const [topBuyers, setTopBuyers] = useState([])
+  const [loading, setLoading] = useState(true) // ✅ thêm loading
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,13 +26,14 @@ function LandingPage() {
           axios.get(`${process.env.REACT_APP_API_URL}/accounts/exclude-lucky`),
           axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
         ])
-
         setCategories(categoryRes.data)
         setAccounts(accountRes.data.accounts)
         setNonLuckAccounts(nonLuckRes.data.accounts)
         setTopBuyers(topBuyersRes.data)
       } catch (err) {
         console.error('Lỗi khi tải dữ liệu:', err)
+      } finally {
+        setLoading(false) // ✅ fetch xong mới tắt loading
       }
     }
 
@@ -46,19 +48,23 @@ function LandingPage() {
     }).length
   }
 
-  // Tách danh mục Liên Quân và Thử vận may chuẩn chỉnh
-  const danhMucLienQuan = categories.filter(cat => {
-    return !cat.name.toLowerCase().includes('thử vận may');
-  });
-
+  const danhMucLienQuan = categories.filter(cat => !cat.name.toLowerCase().includes('thử vận may'))
   const thuVanMay = categories.filter(cat => {
     const countAcc = accounts.filter(acc => {
-      if (!acc.type) return false;
-      const accTypeId = typeof acc.type === 'object' ? acc.type._id : acc.type;
-      return accTypeId === cat._id && !acc.isSold;
-    }).length;
-    return cat.name.toLowerCase().includes('thử vận may') && countAcc > 0;
-  });
+      if (!acc.type) return false
+      const accTypeId = typeof acc.type === 'object' ? acc.type._id : acc.type
+      return accTypeId === cat._id && !acc.isSold
+    }).length
+    return cat.name.toLowerCase().includes('thử vận may') && countAcc > 0
+  })
+
+  if (loading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+      </div>
+    )
+  }
 
   return (
     <>
@@ -92,11 +98,7 @@ function LandingPage() {
         <h2 className="section-title">DANH MỤC LIÊN QUÂN</h2>
         <div className="card-grid">
           <div className="category-card" onClick={() => navigate('/allAccounts')}>
-            <img
-              src={allAcc}
-              alt="Tất cả tài khoản"
-              className="card-image"
-            />
+            <img src={allAcc} alt="Tất cả tài khoản" className="card-image" />
             <div className="card-name">Tất cả tài khoản</div>
             <div className="card-count">
               Số Tài Khoản Hiện Có: <strong>{nonLuckAccounts.length}</strong>
@@ -142,4 +144,4 @@ function LandingPage() {
   )
 }
 
-export default LandingPage;
+export default LandingPage

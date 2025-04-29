@@ -37,14 +37,20 @@ const OrderDetailsPage = () => {
     })
   }
 
-  if (isLoading) return <div>Loading...</div>
+  if (isLoading) {
+    return (
+      <div className="loading-overlay">
+        <div className="spinner"></div>
+      </div>
+    )
+  }
+
   if (!order) return <div>Không tìm thấy đơn hàng</div>
 
   const paidTime = new Date(order.paidAt)
 
   return (
     <>
-      {/* <Header /> */}
       <Navbar/>
       <div className="order-details-container">
         <h1 className="order-details-title">CHI TIẾT TÀI KHOẢN</h1>
@@ -60,62 +66,37 @@ const OrderDetailsPage = () => {
               <th>Thời gian</th>
             </tr>
           </thead>
-          {/* <tbody>
+          <tbody>
             <tr>
-              <td className="red">
-                {order.account.username}
-                <button style={{background:'blue'}} className="copy-btn" onClick={() => handleCopy(order.account.username)}>Copy</button>
+              <td className="red" data-label="Tài khoản">
+                <div className="td-content">
+                  <div className="info-text">{order.account.username}</div>
+                  <button className="copy-btn" onClick={() => handleCopy(order.account.username)}>Copy</button>
+                </div>
               </td>
-              <td className="red">
-                {order.account.password}
-                <button style={{background:'blue'}} className="copy-btn" onClick={() => handleCopy(order.account.password)}>Copy</button>
+              <td className="red" data-label="Mật khẩu">
+                <div className="td-content">
+                  <div className="info-text">{order.account.password}</div>
+                  <button className="copy-btn" onClick={() => handleCopy(order.account.password)}>Copy</button>
+                </div>
               </td>
-              <td className="red">
-                {order.account.authCode || 'Không có'}
-                {order.account.authCode && (
-                  <button style={{background:'blue'}} className="copy-btn" onClick={() => handleCopy(order.account.authCode)}>Copy</button>
-                )}
+              <td className="red" data-label="Mã code">
+                <div className="td-content">
+                  <div className="info-text">{order.account.authCode || 'Không có'}</div>
+                  {order.account.authCode && (
+                    <button className="copy-btn" onClick={() => handleCopy(order.account.authCode)}>Copy</button>
+                  )}
+                </div>
               </td>
-              <td className="red">{order.account.price.toLocaleString()} ₫</td>
-              <td className="red">
+              <td className="red" data-label="Giá">
+                {order.account.price.toLocaleString()} ₫
+              </td>
+              <td className="red" data-label="Thời gian">
                 {paidTime.toLocaleTimeString('vi-VN')}<br />
                 {paidTime.toLocaleDateString('vi-VN')}
               </td>
             </tr>
-          </tbody> */}
-          <tbody>
-  <tr>
-    <td className="red" data-label="Tài khoản">
-      <div className="td-content">
-        <div className="info-text">{order.account.username}</div>
-        <button className="copy-btn" onClick={() => handleCopy(order.account.username)}>Copy</button>
-      </div>
-    </td>
-    <td className="red" data-label="Mật khẩu">
-      <div className="td-content">
-        <div className="info-text">{order.account.password}</div>
-        <button className="copy-btn" onClick={() => handleCopy(order.account.password)}>Copy</button>
-      </div>
-    </td>
-    <td className="red" data-label="Mã code">
-      <div className="td-content">
-        <div className="info-text">{order.account.authCode || 'Không có'}</div>
-        {order.account.authCode && (
-          <button className="copy-btn" onClick={() => handleCopy(order.account.authCode)}>Copy</button>
-        )}
-      </div>
-    </td>
-    <td className="red" data-label="Giá">
-      {order.account.price.toLocaleString()} ₫
-    </td>
-    <td className="red" data-label="Thời gian">
-      {paidTime.toLocaleTimeString('vi-VN')}<br />
-      {paidTime.toLocaleDateString('vi-VN')}
-    </td>
-  </tr>
-</tbody>
-
-
+          </tbody>
         </table>
       </div>
       <Footer />
