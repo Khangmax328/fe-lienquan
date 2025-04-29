@@ -28,6 +28,7 @@
   }
   
   .logo {
+    margin-left: 14px;
     height: 40px;
     object-fit: contain;
   }
@@ -139,15 +140,47 @@
   color: #ff4444;
 }
 @media (max-width: 768px) {
+  .nav-header {
+    height: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .nav-header.hide {
+    transform: translateY(-100%);
+  }
+  
+  .nav-header.show {
+    transform: translateY(0);
+  }
   .menu-toggle {
     display: block !important;
     /* background: #e60023; */
     color: black;
     border: none;
     font-size: 18px;
-    padding: 10px 15px;
+    padding: 0;
     margin: 10px 0;
     border-radius: 5px;
-    z-index: 2000; /* chắc chắn nằm trên */
+    z-index: 2000;
+}
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 0px;
+}
+  .logo {
+    margin-left: 22px;
+    height: 40px;
+    object-fit: contain;
   }
+  
 }

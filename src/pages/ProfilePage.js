@@ -40,9 +40,15 @@ const ProfilePage = () => {
       <p><strong>Ngày tham gia:</strong> {user?.createdAt ? new Date(user.createdAt).toLocaleDateString() : '...'}</p>
     </div>
 
-    <div style={{ textAlign: 'center' }}>
-      <a href="/change-password" className="change-password-link">Đổi mật khẩu</a>
+    <div className="change-password-container">
+      <button
+        className="btn-change-password"
+        onClick={() => navigate('/change-password')}
+      >
+        🔐 Đổi mật khẩu
+      </button>
     </div>
+
   </div>
 </div>
     <Footer />
