@@ -96,7 +96,7 @@
   }
   @media (max-width: 768px) {
     .product-card {
-      height: 410px;
+      height: 100%;
       width: 100%;
       max-width: 100%;
       border: 1px solid #ddd;
@@ -116,7 +116,7 @@
       justify-content: space-between;
       padding: 0 10px;
       margin: 16px 0;
-      font-size: 19px;
+      font-size: 16px;
     }
     .product-card h3 {
       font-size: 17px;
@@ -135,7 +135,7 @@
     width: 99.5%;
     margin-top: 1px;
     margin-left: 1px;
-    height: 180px;
+    height: 220px;
     object-fit: fill;        
     object-position: center;   /* ✅ căn giữa ảnh */
     /* border-bottom: 1px solid #ddd; */
