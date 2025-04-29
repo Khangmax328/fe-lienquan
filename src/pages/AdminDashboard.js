@@ -753,169 +753,116 @@ const handleDeleteUser = async (id) => {
 )} */}
     </div>
     {editAccount && (
-        
   <div className="edit-modal">
-    
     <div className="edit-box">
-    <span className="modal-close" onClick={() => {
-setEditAccount(null); }}>✖</span>
-      <h3 style={{color: 'red', fontWeight:'700', border: '2px solid blue' }} >Sửa tài khoản</h3>
+      <span className="modal-close" onClick={() => setEditAccount(null)}>✖</span>
+      <h3 style={{ color: 'red', fontWeight: '700', border: '2px solid blue' }}>Sửa tài khoản</h3>
 
-    {toastMessage && (
-  <div className="toast-message">{toastMessage}</div>
-)}
-      <label>Tên:
-        <input value={editAccount.name} onChange={(e) => setEditAccount({ ...editAccount, name: e.target.value })} />
-      </label>
+      {toastMessage && <div className="toast-message">{toastMessage}</div>}
 
+      <label>Tên:</label>
+      <input value={editAccount.name} onChange={(e) => setEditAccount({ ...editAccount, name: e.target.value })} />
+
+      {/* Rank trước */}
+      <label>Rank:</label>
+      <select
+        style={{ cursor: 'pointer' }}
+        value={editAccount.rank}
+        onChange={(e) => setEditAccount({ ...editAccount, rank: e.target.value })}
+      >
+        <option value="">-- Chọn rank --</option>
+        <option value="Bạc">Bạc</option>
+        <option value="Vàng">Vàng</option>
+        <option value="Bạch Kim">Bạch Kim</option>
+        <option value="Kim Cương">Kim Cương</option>
+        <option value="Tinh Anh">Tinh Anh</option>
+        <option value="Cao Thủ">Cao Thủ</option>
+        <option value="Thách Đấu">Thách Đấu</option>
+      </select>
+
+      {/* Loại sau */}
       <label>Loại:</label>
-<select 
-style={{cursor: 'pointer'}}
-  value={editAccount.type}
-  onChange={(e) => {
-    const value = e.target.value
-    if (value === '__new') {
-      setShowAddType(true)
-      setEditAccount({ ...editAccount, type: '' })
-    } else {
-      setShowAddType(false)
-      setEditAccount({ ...editAccount, type: value })
-    }
-  }}
->
-  <option style={{cursor: 'pointer'}} value="">-- Chọn loại --</option>
-  {typeList.map((type) => (
-    <option style={{cursor: 'pointer'}}  key={type._id} value={type._id}>{type.name}</option>
-  ))}
-  {/* <option value="__new">➕ Thêm loại mới</option> */}
-</select>
+      <select
+        style={{ cursor: 'pointer' }}
+        value={editAccount.type}
+        onChange={(e) => {
+          const selectedTypeId = e.target.value;
+          const selectedType = typeList.find((t) => t._id === selectedTypeId);
+          let updatedAccount = { ...editAccount, type: selectedTypeId };
 
-{/* {showAddType && (
-  <div style={{ marginTop: '10px' }}>
-    <label>Nhập loại mới:</label>
-    <input
-      style={{ width: '100%', marginBottom: '6px' }}
-      value={newTypeName}
-      onChange={(e) => setNewTypeName(e.target.value)}
-      placeholder="Ví dụ: Acc VIP SIÊU CẤP"
-    />
-    <button
-      style={{
-        backgroundColor: 'green',
-        color: 'white',
-        padding: '6px 12px',
-        borderRadius: '4px',
-        border: 'none',
-        marginTop: '6px',
-        cursor: 'pointer'
-      }}
-      onClick={async () => {
-        setIsAddingCategory(true);
-        try {
-          const category = await uploadService.uploadCategoryWithImage({
-            name: newTypeName,
-            imageFile: newCategoryImage,
-            token: user.access_token,
-          });
-      
-          setTypeList((prev) => [...prev, category]); // ✅ thêm loại mới vào danh sách
-          setNewTypeName('');
-          setNewCategoryImage(null);
-          setToastMessage('✅ Thêm loại thành công!');
-        } catch (err) {
-          console.error(err);
-          setToastMessage('❌ Lỗi khi thêm loại!');
-        }
-        setIsAddingCategory(false); // 👈 kết thúc loading
-        setTimeout(() => setToastMessage(''), 1500);
-      }}
-      
-      
-      
-    >
-      Tạo loại
-    </button>
-  </div>
-)}
-  */}
+          // Gán tự động giá nếu chọn Thử vận may
+          const name = selectedType?.name?.toLowerCase() || '';
+          if (name.includes('thử vận may')) {
+            if (name.includes('20k')) updatedAccount.price = 20000;
+            else if (name.includes('50k')) updatedAccount.price = 50000;
+            else if (name.includes('100k')) updatedAccount.price = 100000;
+            else if (name.includes('200k')) updatedAccount.price = 200000;
+            else if (name.includes('300k')) updatedAccount.price = 300000;
+            else if (name.includes('500k')) updatedAccount.price = 500000;
 
-      <label>Giá:
-        <input type="number" value={editAccount.price} onChange={(e) => setEditAccount({ ...editAccount, price: e.target.value })} />
-      </label>
+            updatedAccount.champions = 0;
+            updatedAccount.skins = 0;
+            updatedAccount.gems = 0;
+          }
 
-      <label>Rank:
-        <input value={editAccount.rank} onChange={(e) => setEditAccount({ ...editAccount, rank: e.target.value })} />
-      </label>
+          setEditAccount(updatedAccount);
+        }}
+      >
+        <option value="">-- Chọn loại --</option>
+        {typeList.map((type) => (
+          <option key={type._id} value={type._id}>{type.name}</option>
+        ))}
+      </select>
 
-      <label>Tướng:
-        <input type="number" value={editAccount.champions} onChange={(e) => setEditAccount({ ...editAccount, champions: e.target.value })} />
-      </label>
+      <label>Giá:</label>
+      <input type="number" value={editAccount.price} onChange={(e) => setEditAccount({ ...editAccount, price: e.target.value })} />
 
-      <label>Skin:
-        <input type="number" value={editAccount.skins} onChange={(e) => setEditAccount({ ...editAccount, skins: e.target.value })} />
-      </label>
+      <label>Tướng:</label>
+      <input type="number" value={editAccount.champions} onChange={(e) => setEditAccount({ ...editAccount, champions: e.target.value })} />
 
-      <label>Ngọc:
-        <input type="number" value={editAccount.gems} onChange={(e) => setEditAccount({ ...editAccount, gems: e.target.value })} />
-      </label>
+      <label>Skin:</label>
+      <input type="number" value={editAccount.skins} onChange={(e) => setEditAccount({ ...editAccount, skins: e.target.value })} />
 
-      <label>Username:
-        <input value={editAccount.username} onChange={(e) => setEditAccount({ ...editAccount, username: e.target.value })} />
-      </label>
+      <label>Ngọc:</label>
+      <input type="number" value={editAccount.gems} onChange={(e) => setEditAccount({ ...editAccount, gems: e.target.value })} />
 
-      <label>Password:
-        <input value={editAccount.password} onChange={(e) => setEditAccount({ ...editAccount, password: e.target.value })} />
-      </label>
+      <label>Username:</label>
+      <input value={editAccount.username} onChange={(e) => setEditAccount({ ...editAccount, username: e.target.value })} />
 
-      <label>Mã xác thực:
-        <input value={editAccount.authCode || ''} onChange={(e) => setEditAccount({ ...editAccount, authCode: e.target.value })} />
-      </label>
+      <label>Password:</label>
+      <input value={editAccount.password} onChange={(e) => setEditAccount({ ...editAccount, password: e.target.value })} />
 
-      <label>Đã bán:
-        <select value={editAccount.isSold} onChange={(e) => setEditAccount({ ...editAccount, isSold: e.target.value === 'true' })}>
-          <option value="false">Chưa bán</option>
-          <option value="true">Đã bán</option>
-        </select>
-      </label>
+      <label>Mã xác thực:</label>
+      <input value={editAccount.authCode || ''} onChange={(e) => setEditAccount({ ...editAccount, authCode: e.target.value })} />
+
+      <label>Đã bán:</label>
+      <select
+        value={editAccount.isSold}
+        onChange={(e) => setEditAccount({ ...editAccount, isSold: e.target.value === 'true' })}
+      >
+        <option value="false">Chưa bán</option>
+        <option value="true">Đã bán</option>
+      </select>
+
       <label>Ảnh đại diện:</label>
-        <input
-          type="file"
-          onChange={(e) =>
-            setEditAccount({ ...editAccount, image: e.target.files[0] })
-          }
-        />
-        <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
-          (Nếu không chọn ảnh mới, sẽ giữ ảnh cũ)
-        </p>
+      <input type="file" onChange={(e) => setEditAccount({ ...editAccount, image: e.target.files[0] })} />
+      <p style={{ fontSize: '13px', fontStyle: 'italic' }}>(Nếu không chọn ảnh mới, sẽ giữ ảnh cũ)</p>
 
-        <label>Ảnh chi tiết (nhiều):</label>
-        <input
-          type="file"
-          multiple
-          onChange={(e) =>
-            setEditAccount({ ...editAccount, images: Array.from(e.target.files) })
-          }
-        />
-        <p style={{ fontSize: '13px', fontStyle: 'italic' }}>
-          (Không chọn sẽ giữ ảnh chi tiết cũ)
-        </p>
-
+      <label>Ảnh chi tiết (nhiều):</label>
+      <input type="file" multiple onChange={(e) => setEditAccount({ ...editAccount, images: Array.from(e.target.files) })} />
+      <p style={{ fontSize: '13px', fontStyle: 'italic' }}>(Không chọn sẽ giữ ảnh chi tiết cũ)</p>
 
       <div className="modal-actions">
-      <button
-        style={{ marginRight: '-10px' }}
-        className="btn-ok"
-        onClick={handleUpdateAccount}
-        disabled={isUpdating}
-      >
-        {isUpdating ? 'Đang cập nhật...' : 'Lưu'}
-      </button>
-
+        <button className="btn-ok" onClick={handleUpdateAccount} disabled={isUpdating}>
+          {isUpdating ? 'Đang cập nhật...' : 'Lưu'}
+        </button>
         <button className="btn-cancel" onClick={() => setEditAccount(null)}>Huỷ</button>
       </div>
     </div>
   </div>
 )}
+
+
 
 {showCreateModal && (
   <div className="edit-modal">
@@ -930,6 +877,23 @@ style={{cursor: 'pointer'}}
       <label>Tên:</label>
       <input value={newAccount.name} onChange={(e) => setNewAccount({ ...newAccount, name: e.target.value })} />
 
+{/* Rank sửa thành select */}
+<label>Rank:</label>
+      <select
+        style={{ cursor: 'pointer' }}
+        value={newAccount.rank}
+        onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })}
+      >
+        <option value="">-- Chọn rank --</option>
+        <option value="Bạc">Bạc</option>
+        <option value="Vàng">Vàng</option>
+        <option value="Bạch Kim">Bạch Kim</option>
+        <option value="Kim Cương">Kim Cương</option>
+        <option value="Tinh Anh">Tinh Anh</option>
+        <option value="Cao Thủ">Cao Thủ</option>
+        <option value="Thách Đấu">Thách Đấu</option>
+      </select>
+      
       {/* Chọn loại */}
       <label>Loại:</label>
       <select
@@ -1035,22 +999,7 @@ style={{cursor: 'pointer'}}
       <label>Ngọc:</label>
       <input type="number" value={newAccount.gems} onChange={(e) => setNewAccount({ ...newAccount, gems: e.target.value })} />
 
-      {/* Rank sửa thành select */}
-      <label>Rank:</label>
-      <select
-        style={{ cursor: 'pointer' }}
-        value={newAccount.rank}
-        onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })}
-      >
-        <option value="">-- Chọn rank --</option>
-        <option value="Bạc">Bạc</option>
-        <option value="Vàng">Vàng</option>
-        <option value="Bạch Kim">Bạch Kim</option>
-        <option value="Kim Cương">Kim Cương</option>
-        <option value="Tinh Anh">Tinh Anh</option>
-        <option value="Cao Thủ">Cao Thủ</option>
-        <option value="Thách Đấu">Thách Đấu</option>
-      </select>
+      
 
       <label>Username:</label>
       <input value={newAccount.username} onChange={(e) => setNewAccount({ ...newAccount, username: e.target.value })} />
