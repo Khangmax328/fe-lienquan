@@ -257,6 +257,7 @@
 @media screen and (max-width: 768px) {
   .landing-container {
     padding: 0px;
+    margin-bottom: 20px;
 }
   .banner-section {
     flex-direction: row;
@@ -269,7 +270,12 @@
     border-radius: unset;
 
   }
-
+  .card-name {
+    font-weight: 700;
+    color: #e60000;
+    font-size: 14px;
+    margin-top: 12px;
+  }
   .top-buyers-box {
     order: 1;
     width: 48%;
@@ -303,7 +309,7 @@
   .category-card {
     /* width: 50% !important; */
     /* max-width: 100%; */
-    max-width: 185px;
+    max-width: 196px;
   }
 
   .banner-overlay {
