@@ -770,6 +770,9 @@ td button:hover {
     margin-bottom: 10px;
     margin-top: 3px;
   }
+  .edit-box textarea {
+    font-size: 16px !important; /* Tránh phóng to khi nhấn */
+  }
   .menu-toggle1 {
     display: block;
     background: #e60023;
