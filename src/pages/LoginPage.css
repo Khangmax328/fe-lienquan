@@ -79,20 +79,26 @@
   
   @media (max-width: 768px) {
     .login-container {
-      width: 90%;
+      width: 72%;
       padding: 20px;
       margin: 20px auto;
     }
   
     .login-form input[type="email"],
     .login-form input[type="password"] {
-      font-size: 14px;
+      font-size: 16px;
       padding: 8px;
     }
+  
   
     .btn-login,
     .btn-register {
       font-size: 14px;
       padding: 8px;
+    }
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
     }
   }

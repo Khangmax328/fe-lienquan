@@ -765,7 +765,7 @@ td button:hover {
   }
   .edit-box input,
   .edit-box select {
-    font-size: 13px; /* 🔥 chữ nhỏ trong input */
+    font-size: 16px !important; /* 🔥 chữ nhỏ trong input */
     padding: 8px 10px; /* 🔥 padding nhỏ hơn */
     margin-bottom: 10px;
     margin-top: 3px;
@@ -882,7 +882,7 @@ td button:hover {
   width: 156px;
 }
 .main-content{
-  /* padding: 1px 5px; */
+  padding: 1px 5px;
   /* height: 400px; */
 }
 .edit-box {
@@ -966,7 +966,11 @@ td button:hover {
   font-weight: bold;
   cursor: pointer;
 }
- 
+.revenue-box {
+  font-size: 15px !important;
+  padding: 10px 12px;
+}
+
 
 
 
