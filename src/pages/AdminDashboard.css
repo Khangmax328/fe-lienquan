@@ -892,6 +892,7 @@ td button:hover {
   max-width: 380px;
   border-radius: 0px;
   width: 90%;
+  padding-bottom: 65px;
 }
 
 .payment-box {
