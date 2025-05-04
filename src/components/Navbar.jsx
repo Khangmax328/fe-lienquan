@@ -20,7 +20,7 @@ const Navbar = () => {
   // Ẩn/hiện Navbar khi cuộn
   useEffect(() => {
     const handleScroll = () => {
-      const alwaysShow = ['/home', '/login', '/register'];
+      const alwaysShow = ['/home', '/login', '/register', '/order-history','/banking','/profile','/change-password'];
   
       if (alwaysShow.includes(location.pathname)) {
         setShowNavbar(true);
