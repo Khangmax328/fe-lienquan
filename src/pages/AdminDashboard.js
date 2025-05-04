@@ -54,6 +54,7 @@ const [isSavingPayment, setIsSavingPayment] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [typeList, setTypeList] = useState([])
   const [editUser, setEditUser] = useState(null);
+  const [isDeletingUser, setIsDeletingUser] = useState(false);
   const userLogin = useSelector((state) => state.user);
   const limit = 50;
   const [soldAccountsPage, setSoldAccountsPage] = useState(1);
@@ -69,6 +70,7 @@ const displayedSoldAccounts = soldAccounts.slice(
 const [paymentInfo, setPaymentInfo] = useState(null);
 const [editPayment, setEditPayment] = useState(false);
 const [qrFile, setQrFile] = useState(null);
+const [isSavingUser, setIsSavingUser] = useState(false)
   const handleCloseCategoryManager = async () => {
     if (categoryChanged) {
       try {
@@ -1166,7 +1168,16 @@ const handleDeleteUser = async (id) => {
     <div className="confirm-box">
       <p>Bạn có chắc muốn xoá người dùng này không?</p>
       <div className="modal-actions">
-        <button className="btn-ok" onClick={confirmDeleteUser}>Đồng ý</button>
+        <button
+          className="btn-ok"
+          onClick={async () => {
+            setIsDeletingUser(true); // Bắt đầu loading khi xác nhận xóa
+            await confirmDeleteUser(); // Hàm xử lý xóa người dùng
+            setIsDeletingUser(false); // Kết thúc loading
+          }}
+        >
+          {isDeletingUser ? 'Đang xóa...' : 'Đồng ý'}
+        </button>
         <button className="btn-cancel" onClick={() => setShowUserConfirm(false)}>Huỷ</button>
       </div>
     </div>
@@ -1204,7 +1215,16 @@ const handleDeleteUser = async (id) => {
       />
 
       <div className="modal-actions">
-        <button className="btn-ok" onClick={handleUpdateUser}>Lưu</button>
+        <button 
+          className="btn-ok" 
+          onClick={async () => {
+            setIsSavingUser(true); // Bắt đầu loading
+            await handleUpdateUser(); // Giả sử đây là hàm xử lý update
+            setIsSavingUser(false); // Kết thúc loading
+          }}
+        >
+          {isSavingUser ? 'Đang lưu...' : 'Lưu'}
+        </button>
         <button className="btn-cancel" onClick={() => setEditUser(null)}>Huỷ</button>
       </div>
     </div>

@@ -20,28 +20,16 @@ const Navbar = () => {
   // Ẩn/hiện Navbar khi cuộn
   useEffect(() => {
     const handleScroll = () => {
-      const alwaysShow = ['/home', '/login', '/register', '/order-history','/banking','/profile','/change-password'];
-  
-      if (alwaysShow.includes(location.pathname)) {
-        setShowNavbar(true);
-        return;
-      }
-  
       if (window.scrollY > lastScrollY) {
-        setShowNavbar(false);
+        setShowNavbar(false)
       } else {
-        setShowNavbar(true);
+        setShowNavbar(true)
       }
-  
-      setLastScrollY(window.scrollY);
-    };
-  
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, location.pathname]);
-  
-  
-  
+      setLastScrollY(window.scrollY)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [lastScrollY])
 
   useEffect(() => {
     const handleClickOutside = (event) => {
