@@ -47,17 +47,30 @@ const OrderHistoryPage = () => {
       confirmButtonText: 'Xóa',
       cancelButtonText: 'Hủy',
     })
-
+  
     if (result.isConfirmed) {
       try {
         await OrderService.deleteOrder(id, user.access_token)
         await queryClient.invalidateQueries(['my-orders'])
-        Swal.fire('Đã xóa!', 'Đơn hàng đã được xóa.', 'success')
+        Swal.fire({
+          title: 'Đã xóa!',
+          text: 'Đơn hàng đã được xóa.',
+          icon: 'success',
+          showConfirmButton: false, // Tắt nút OK
+          timer: 1000, 
+        })
       } catch (err) {
-        Swal.fire('Lỗi', err.response?.data?.message || 'Xóa thất bại', 'error')
+        Swal.fire({
+          title: 'Lỗi',
+          text: err.response?.data?.message || 'Xóa thất bại',
+          icon: 'error',
+          showConfirmButton: false, // Tắt nút OK
+          timer: 1000, 
+        })
       }
     }
   }
+  
 
   return (
     <>
