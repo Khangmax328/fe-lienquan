@@ -95,7 +95,9 @@ const Navbar = () => {
           <a href="/home" className="nav-item">TRANG CHỦ</a>
           <a href="/banking" className="nav-item">NẠP ATM - VÍ</a>
           <a href="/order-history" className="nav-item">LỊCH SỬ MUA</a>
-          <a href="/profile" className="nav-item">QUẢN LÍ TÀI KHOẢN</a>
+          {user?.email && (
+            <a href="/profile" className="nav-item">QUẢN LÍ TÀI KHOẢN</a>
+          )}
         </div>
       )}
 
