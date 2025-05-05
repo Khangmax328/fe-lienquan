@@ -488,14 +488,14 @@ const handleDeleteUser = async (id) => {
               </tbody>
             </table>
             <div className="pagination-controls">
-  <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-    Trang trước
-  </button>
-  <span>Trang {currentPage} / {totalPages}</span>
-  <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-    Trang sau
-  </button>
-</div>
+              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+                Trang trước
+              </button>
+              <span>Trang {currentPage} / {totalPages}</span>
+              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+                Trang sau
+              </button>
+            </div>
           </div>
         )}
 

@@ -20,9 +20,15 @@ const Navbar = () => {
   // Ẩn/hiện Navbar khi cuộn
   useEffect(() => {
     const handleScroll = () => {
-      const fixedPaths = ['/home', '/login', '/register']
-      if (fixedPaths.includes(location.pathname)) {
-        setShowNavbar(true) // Luôn hiện
+      const fixedPaths = ['/home', '/login', '/register', '/banking', '/order-history', '/profile', '/change-password']
+  
+      // Kiểm tra nếu đường dẫn bắt đầu với '/order-details/' và có ID động phía sau
+      const orderDetailsRegex = /^\/order-details\/[a-f0-9]{24}$/; // Giả sử ID là chuỗi 24 ký tự hex
+      if (
+        fixedPaths.some(path => location.pathname.startsWith(path)) || 
+        orderDetailsRegex.test(location.pathname)
+      ) {
+        setShowNavbar(true); // Luôn hiện
       } else {
         if (window.scrollY > lastScrollY) {
           setShowNavbar(false)
@@ -36,6 +42,7 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [lastScrollY, location.pathname])
+  
   
 
   useEffect(() => {
