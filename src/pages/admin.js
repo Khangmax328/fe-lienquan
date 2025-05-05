@@ -54,8 +54,8 @@ const [isSavingPayment, setIsSavingPayment] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
   const [typeList, setTypeList] = useState([])
   const [editUser, setEditUser] = useState(null);
-  const [isDeletingUser, setIsDeletingUser] = useState(false);
   const userLogin = useSelector((state) => state.user);
+  const limit = 50;
   const [soldAccountsPage, setSoldAccountsPage] = useState(1);
 const soldAccountsPerPage = 50;
 const [showSidebar, setShowSidebar] = useState(false);
@@ -69,7 +69,6 @@ const displayedSoldAccounts = soldAccounts.slice(
 const [paymentInfo, setPaymentInfo] = useState(null);
 const [editPayment, setEditPayment] = useState(false);
 const [qrFile, setQrFile] = useState(null);
-const [isSavingUser, setIsSavingUser] = useState(false)
   const handleCloseCategoryManager = async () => {
     if (categoryChanged) {
       try {
@@ -103,43 +102,25 @@ const [isSavingUser, setIsSavingUser] = useState(false)
     setTimeout(() => setToastMessage(''), 2000);
   };
   
-  const limit = 50;
 
-const fetchData = async (page = 1, usernameFilter = '', soldFilter = 'all') => {
-  
-  try {
-    // console.log(`Fetching data for page: ${page}, limit: ${limit}`);
-    const data = await AccountService.getAllAccountsForAdmin(user.access_token, {
-      page,
-      // limit: 50,
-      username: usernameFilter,
-      soldStatus: soldFilter, // thêm tham số lọc trạng thái bán
-    });
-  
-    setAccounts(data.accounts);
-    // console.log('Dữ liệu tài khoản trả về từ backend:', data.accounts);
-    setTotalPages(data.totalPages);
-    setCurrentPage(data.currentPage);
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách acc:', error);
-  }
-};
-
-  
-  
-  // Sau đó khi lọc theo trạng thái bán, gọi lại fetchData với tham số lọc
-  const handleFilterSoldStatusChange = (e) => {
-    setFilterSoldStatus(e.target.value);
-    fetchData(currentPage, searchUsername, e.target.value);
+  const fetchData = async (page = 1, usernameFilter = '') => {
+    try {
+      if (user?.isAdmin) {
+        const data = await AccountService.getAllAccountsForAdmin(user.access_token, {
+          page,
+          limit: 50,
+          username: usernameFilter
+        });
+        setAccounts(data.accounts);
+        setTotalPages(data.totalPages);
+        setCurrentPage(data.currentPage);
+      }
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách acc:', error);
+    }
   };
-  
   useEffect(() => {
-    fetchData(currentPage, searchUsername, filterSoldStatus);
-  }, [currentPage, searchUsername, filterSoldStatus]);
-  
-  
-  useEffect(() => {
-    // console.log('Tab hiện tại:', selectedTab);
+    console.log('Tab hiện tại:', selectedTab);
   }, [selectedTab]);
   useEffect(() => {
     const handleResize = () => {
@@ -470,50 +451,49 @@ const handleDeleteUser = async (id) => {
                 </tr>
               </thead>
               <tbody>
-              {accounts
-  .filter((acc) => {
-    if (filterSoldStatus === 'sold') return acc.isSold === true; // Lọc tài khoản đã bán
-    if (filterSoldStatus === 'unsold') return acc.isSold === false; // Lọc tài khoản chưa bán
-    return true; // Nếu không lọc theo trạng thái, trả tất cả
-  })
-  .map((acc, index) => (
-    <tr key={acc._id}>
-      <td>{(currentPage - 1) * limit + index + 1}</td>
-      <td>{acc.name}</td>
-      <td>{acc.type?.name || '—'}</td>
-      <td>{acc.price.toLocaleString()}₫</td>
-      <td>{acc.champions}</td>
-      <td>{acc.skins}</td>
-      <td>{acc.gems}</td>
-      <td>{acc.rank}</td>
-      <td style={{ color: acc.isSold ? 'green' : 'red', fontWeight: 'bold' }}>
-        {acc.isSold ? '✔️' : '✖️'}
-      </td>
-      {user?.isAdmin && (
-        <>
-          <td>{acc.username}</td>
-          <td>{acc.password}</td>
-          <td>{acc.authCode || '—'}</td>
-        </>
-      )}
-      <td>
-        <button style={{ marginBottom: '5px' }} onClick={() => setEditAccount(acc)}>Sửa</button>
-        <button onClick={() => handleAskDelete(acc._id)}>Xoá</button>
-      </td>
-    </tr>
-  ))}
-
+                {accounts
+                  .filter((acc) => {
+                    if (filterSoldStatus === 'sold') return acc.isSold === true;
+                    if (filterSoldStatus === 'unsold') return acc.isSold === false;
+                    return true;
+                  })
+                  .map((acc, index) => (
+                    <tr key={acc._id}>
+                      <td>{(currentPage - 1) * limit + index + 1}</td>
+                      <td>{acc.name}</td>
+                      <td>{acc.type?.name || '—'}</td>
+                      <td>{acc.price.toLocaleString()}₫</td>
+                      <td>{acc.champions}</td>
+                      <td>{acc.skins}</td>
+                      <td>{acc.gems}</td>
+                      <td>{acc.rank}</td>
+                      <td style={{ color: acc.isSold ? 'green' : 'red', fontWeight: 'bold' }}>
+                        {acc.isSold ? '✔️' : '✖️'}
+                      </td>
+                      {user?.isAdmin && (
+                        <>
+                          <td>{acc.username}</td>
+                          <td>{acc.password}</td>
+                          <td>{acc.authCode || '—'}</td>
+                        </>
+                      )}
+                      <td>
+                      <button style={{marginBottom:'5px'}} onClick={() => setEditAccount(acc)}>Sửa</button>
+                        <button onClick={() => handleAskDelete(acc._id)}>Xoá</button>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
             <div className="pagination-controls">
-              <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
-                Trang trước
-              </button>
-              <span>Trang {currentPage} / {totalPages}</span>
-              <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
-                Trang sau
-              </button>
-            </div>
+  <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+    Trang trước
+  </button>
+  <span>Trang {currentPage} / {totalPages}</span>
+  <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+    Trang sau
+  </button>
+</div>
           </div>
         )}
 
@@ -783,7 +763,6 @@ const handleDeleteUser = async (id) => {
       <label>Tên:</label>
       <input value={editAccount.name} onChange={(e) => setEditAccount({ ...editAccount, name: e.target.value })} />
 
-      {/* Rank trước */}
       <label>Rank:</label>
       <select
         style={{ cursor: 'pointer' }}
@@ -800,32 +779,19 @@ const handleDeleteUser = async (id) => {
         <option value="Thách Đấu">Thách Đấu</option>
       </select>
 
-      {/* Loại sau */}
       <label>Loại:</label>
       <select
         style={{ cursor: 'pointer' }}
         value={editAccount.type}
         onChange={(e) => {
-          const selectedTypeId = e.target.value;
-          const selectedType = typeList.find((t) => t._id === selectedTypeId);
-          let updatedAccount = { ...editAccount, type: selectedTypeId };
-
-          // Gán tự động giá nếu chọn Thử vận may
-          const name = selectedType?.name?.toLowerCase() || '';
-          if (name.includes('thử vận may')) {
-            if (name.includes('20k')) updatedAccount.price = 20000;
-            else if (name.includes('50k')) updatedAccount.price = 50000;
-            else if (name.includes('100k')) updatedAccount.price = 100000;
-            else if (name.includes('200k')) updatedAccount.price = 200000;
-            else if (name.includes('300k')) updatedAccount.price = 300000;
-            else if (name.includes('500k')) updatedAccount.price = 500000;
-
-            updatedAccount.champions = 0;
-            updatedAccount.skins = 0;
-            updatedAccount.gems = 0;
+          const value = e.target.value;
+          if (value === '__new') {
+            setShowAddType(true);
+            setEditAccount({ ...editAccount, type: '' });
+          } else {
+            setShowAddType(false);
+            setEditAccount({ ...editAccount, type: value });
           }
-
-          setEditAccount(updatedAccount);
         }}
       >
         <option value="">-- Chọn loại --</option>
@@ -856,10 +822,7 @@ const handleDeleteUser = async (id) => {
       <input value={editAccount.authCode || ''} onChange={(e) => setEditAccount({ ...editAccount, authCode: e.target.value })} />
 
       <label>Đã bán:</label>
-      <select
-        value={editAccount.isSold}
-        onChange={(e) => setEditAccount({ ...editAccount, isSold: e.target.value === 'true' })}
-      >
+      <select value={editAccount.isSold} onChange={(e) => setEditAccount({ ...editAccount, isSold: e.target.value === 'true' })}>
         <option value="false">Chưa bán</option>
         <option value="true">Đã bán</option>
       </select>
@@ -873,7 +836,7 @@ const handleDeleteUser = async (id) => {
       <p style={{ fontSize: '13px', fontStyle: 'italic' }}>(Không chọn sẽ giữ ảnh chi tiết cũ)</p>
 
       <div className="modal-actions">
-        <button className="btn-ok" onClick={handleUpdateAccount} disabled={isUpdating}>
+        <button className="btn-ok" style={{ marginRight: '-10px' }} onClick={handleUpdateAccount} disabled={isUpdating}>
           {isUpdating ? 'Đang cập nhật...' : 'Lưu'}
         </button>
         <button className="btn-cancel" onClick={() => setEditAccount(null)}>Huỷ</button>
@@ -881,7 +844,6 @@ const handleDeleteUser = async (id) => {
     </div>
   </div>
 )}
-
 
 
 {showCreateModal && (
@@ -897,23 +859,6 @@ const handleDeleteUser = async (id) => {
       <label>Tên:</label>
       <input value={newAccount.name} onChange={(e) => setNewAccount({ ...newAccount, name: e.target.value })} />
 
-{/* Rank sửa thành select */}
-<label>Rank:</label>
-      <select
-        style={{ cursor: 'pointer' }}
-        value={newAccount.rank}
-        onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })}
-      >
-        <option value="">-- Chọn rank --</option>
-        <option value="Bạc">Bạc</option>
-        <option value="Vàng">Vàng</option>
-        <option value="Bạch Kim">Bạch Kim</option>
-        <option value="Kim Cương">Kim Cương</option>
-        <option value="Tinh Anh">Tinh Anh</option>
-        <option value="Cao Thủ">Cao Thủ</option>
-        <option value="Thách Đấu">Thách Đấu</option>
-      </select>
-      
       {/* Chọn loại */}
       <label>Loại:</label>
       <select
@@ -1019,7 +964,22 @@ const handleDeleteUser = async (id) => {
       <label>Ngọc:</label>
       <input type="number" value={newAccount.gems} onChange={(e) => setNewAccount({ ...newAccount, gems: e.target.value })} />
 
-      
+      {/* Rank sửa thành select */}
+      <label>Rank:</label>
+      <select
+        style={{ cursor: 'pointer' }}
+        value={newAccount.rank}
+        onChange={(e) => setNewAccount({ ...newAccount, rank: e.target.value })}
+      >
+        <option value="">-- Chọn rank --</option>
+        <option value="Bạc">Bạc</option>
+        <option value="Vàng">Vàng</option>
+        <option value="Bạch Kim">Bạch Kim</option>
+        <option value="Kim Cương">Kim Cương</option>
+        <option value="Tinh Anh">Tinh Anh</option>
+        <option value="Cao Thủ">Cao Thủ</option>
+        <option value="Thách Đấu">Thách Đấu</option>
+      </select>
 
       <label>Username:</label>
       <input value={newAccount.username} onChange={(e) => setNewAccount({ ...newAccount, username: e.target.value })} />
@@ -1186,16 +1146,7 @@ const handleDeleteUser = async (id) => {
     <div className="confirm-box">
       <p>Bạn có chắc muốn xoá người dùng này không?</p>
       <div className="modal-actions">
-        <button
-          className="btn-ok"
-          onClick={async () => {
-            setIsDeletingUser(true); // Bắt đầu loading khi xác nhận xóa
-            await confirmDeleteUser(); // Hàm xử lý xóa người dùng
-            setIsDeletingUser(false); // Kết thúc loading
-          }}
-        >
-          {isDeletingUser ? 'Đang xóa...' : 'Đồng ý'}
-        </button>
+        <button className="btn-ok" onClick={confirmDeleteUser}>Đồng ý</button>
         <button className="btn-cancel" onClick={() => setShowUserConfirm(false)}>Huỷ</button>
       </div>
     </div>
@@ -1233,16 +1184,7 @@ const handleDeleteUser = async (id) => {
       />
 
       <div className="modal-actions">
-        <button 
-          className="btn-ok" 
-          onClick={async () => {
-            setIsSavingUser(true); // Bắt đầu loading
-            await handleUpdateUser(); // Giả sử đây là hàm xử lý update
-            setIsSavingUser(false); // Kết thúc loading
-          }}
-        >
-          {isSavingUser ? 'Đang lưu...' : 'Lưu'}
-        </button>
+        <button className="btn-ok" onClick={handleUpdateUser}>Lưu</button>
         <button className="btn-cancel" onClick={() => setEditUser(null)}>Huỷ</button>
       </div>
     </div>
