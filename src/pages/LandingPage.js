@@ -88,27 +88,27 @@ function LandingPage() {
       <Navbar />
       <div className="landing-container">
         {/* Banner hiển thị TOP MUA ACC */}
-        <div className="banner-section" style={{ backgroundImage: `url(${banner})` }}>
-          <div className="banner-overlay">
-            <div className="top-buyers-box">
-              <div className="top-buyers-header">TOP MUA ACC</div>
-              <ul className="top-buyers-list">
-                {topBuyers.map((user, index) => (
-                  <li key={user._id} className="buyer-item">
-                    <span className={`buyer-rank-icon rank-${index + 1}`}>
-                      {index + 1}
-                    </span>
-                    <span className="buyer-name">{user.username}</span>
-                    <span className="buyer-money">{user.totalSpent.toLocaleString()}đ</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="banner-right">
-              <img src={bia1} alt="Banner" className="banner-right-image" />
-            </div>
-          </div>
-        </div>
+        // <div className="banner-section" style={{ backgroundImage: `url(${banner})` }}>
+        //   <div className="banner-overlay">
+        //     <div className="top-buyers-box">
+        //       <div className="top-buyers-header">TOP MUA ACC</div>
+        //       <ul className="top-buyers-list">
+        //         {topBuyers.map((user, index) => (
+        //           <li key={user._id} className="buyer-item">
+        //             <span className={`buyer-rank-icon rank-${index + 1}`}>
+        //               {index + 1}
+        //             </span>
+        //             <span className="buyer-name">{user.username}</span>
+        //             <span className="buyer-money">{user.totalSpent.toLocaleString()}đ</span>
+        //           </li>
+        //         ))}
+        //       </ul>
+        //     </div>
+        //     <div className="banner-right">
+        //       <img src={bia1} alt="Banner" className="banner-right-image" />
+        //     </div>
+        //   </div>
+        // </div>
 
         {/* DANH MỤC LIÊN QUÂN */}
         <h2 className="section-title">DANH MỤC LIÊN QUÂN</h2>
