@@ -12,7 +12,6 @@ import allAcc from '../assets/allacc.jpg'
 function LandingPage() {
   const [categories, setCategories] = useState([])
   const [accounts, setAccounts] = useState([])
-  const [nonLuckAccounts, setNonLuckAccounts] = useState([])
   const [topBuyers, setTopBuyers] = useState([])
   const [loading, setLoading] = useState(true) // ✅ thêm loading
   const navigate = useNavigate()
@@ -20,15 +19,13 @@ function LandingPage() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [categoryRes, accountRes, nonLuckRes, topBuyersRes] = await Promise.all([
+        const [categoryRes, accountRes, topBuyersRes] = await Promise.all([
           axios.get(`${process.env.REACT_APP_API_URL}/categories`),
           axios.get(`${process.env.REACT_APP_API_URL}/accounts`),
-          axios.get(`${process.env.REACT_APP_API_URL}/accounts/exclude-lucky`),
           axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
         ])
         setCategories(categoryRes.data)
         setAccounts(accountRes.data.accounts)
-        setNonLuckAccounts(nonLuckRes.data.accounts)
         setTopBuyers(topBuyersRes.data)
       } catch (err) {
         console.error('Lỗi khi tải dữ liệu:', err)
@@ -40,15 +37,19 @@ function LandingPage() {
     fetchData()
   }, [])
 
+  // Hàm tính số tài khoản chưa bán trong từng danh mục
   const countByCategoryFromNonLuck = (catId) => {
-    return nonLuckAccounts.filter(acc => {
+    return accounts.filter(acc => {
       if (!acc.type) return false
       const accTypeId = typeof acc.type === 'object' ? acc.type._id : acc.type
-      return accTypeId === catId
+      return accTypeId === catId && !acc.isSold
     }).length
   }
 
+  // Lọc các danh mục không phải "Thử vận may"
   const danhMucLienQuan = categories.filter(cat => !cat.name.toLowerCase().includes('thử vận may'))
+  
+  // Lọc các danh mục thuộc "Thử vận may"
   const thuVanMay = categories.filter(cat => {
     const countAcc = accounts.filter(acc => {
       if (!acc.type) return false
@@ -57,6 +58,21 @@ function LandingPage() {
     }).length
     return cat.name.toLowerCase().includes('thử vận may') && countAcc > 0
   })
+
+  // Tính tổng số tài khoản
+  const totalAccounts = accounts.length
+
+  // Tính tổng số tài khoản trong mục "Thử vận may"
+  const totalLuckAccounts = thuVanMay.reduce((count, cat) => {
+    return count + accounts.filter(acc => {
+      if (!acc.type) return false;
+      const accTypeId = typeof acc.type === 'object' ? acc.type._id : acc.type;
+      return accTypeId === cat._id && !acc.isSold;
+    }).length;
+  }, 0);
+
+  // Tính số tài khoản không thuộc "Thử vận may"
+  const totalNonLuckAccounts = totalAccounts - totalLuckAccounts;
 
   if (loading) {
     return (
@@ -97,15 +113,17 @@ function LandingPage() {
         {/* DANH MỤC LIÊN QUÂN */}
         <h2 className="section-title">DANH MỤC LIÊN QUÂN</h2>
         <div className="card-grid">
+          {/* Tất cả tài khoản */}
           <div className="category-card" onClick={() => navigate('/allAccounts')}>
             <img src={allAcc} alt="Tất cả tài khoản" className="card-image" />
             <div className="card-name">Tất cả tài khoản</div>
             <div className="card-count">
-              Số Tài Khoản Hiện Có: <strong>{nonLuckAccounts.length}</strong>
+              Số Tài Khoản Hiện Có: <strong>{totalNonLuckAccounts}</strong>
             </div>
             <button className="btn-view">XEM TẤT CẢ</button>
           </div>
 
+          {/* Các danh mục khác */}
           {danhMucLienQuan.map((cat) => (
             <div key={cat._id} className="category-card" onClick={() => navigate(`/category/${cat._id}`)}>
               <img src={cat.image?.url} alt={cat.name} className="card-image" />

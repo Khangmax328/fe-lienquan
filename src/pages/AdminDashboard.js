@@ -105,25 +105,21 @@ const [isSavingUser, setIsSavingUser] = useState(false)
   
   const limit = 50;
 
-const fetchData = async (page = 1, usernameFilter = '', soldFilter = 'all') => {
+  const fetchData = async (page = 1, usernameFilter = '', soldFilter = 'all') => {
+    try {
+      const data = await AccountService.getAllAccountsForAdmin(user.access_token, {
+        page,
+        username: usernameFilter,  // Gửi tham số tìm kiếm username
+        soldStatus: soldFilter,  // Thêm tham số lọc trạng thái bán
+      });
+      setAccounts(data.accounts);
+      setTotalPages(data.totalPages);
+      setCurrentPage(data.currentPage);
+    } catch (error) {
+      console.error('Lỗi khi lấy danh sách acc:', error);
+    }
+  };
   
-  try {
-    // console.log(`Fetching data for page: ${page}, limit: ${limit}`);
-    const data = await AccountService.getAllAccountsForAdmin(user.access_token, {
-      page,
-      // limit: 50,
-      username: usernameFilter,
-      soldStatus: soldFilter, // thêm tham số lọc trạng thái bán
-    });
-  
-    setAccounts(data.accounts);
-    // console.log('Dữ liệu tài khoản trả về từ backend:', data.accounts);
-    setTotalPages(data.totalPages);
-    setCurrentPage(data.currentPage);
-  } catch (error) {
-    console.error('Lỗi khi lấy danh sách acc:', error);
-  }
-};
 
   
   
@@ -136,6 +132,7 @@ const fetchData = async (page = 1, usernameFilter = '', soldFilter = 'all') => {
   useEffect(() => {
     fetchData(currentPage, searchUsername, filterSoldStatus);
   }, [currentPage, searchUsername, filterSoldStatus]);
+  
   
   
   useEffect(() => {
@@ -442,8 +439,9 @@ const handleDeleteUser = async (id) => {
               className="search-username"
               placeholder="Tìm theo username..."
               value={searchUsername}
-              onChange={(e) => setSearchUsername(e.target.value)}
+              onChange={(e) => setSearchUsername(e.target.value)} // Đảm bảo giá trị searchUsername được cập nhật khi người dùng thay đổi
             />
+
           </div>
 
 
@@ -470,40 +468,45 @@ const handleDeleteUser = async (id) => {
                 </tr>
               </thead>
               <tbody>
-              {accounts
-  .filter((acc) => {
-    if (filterSoldStatus === 'sold') return acc.isSold === true; // Lọc tài khoản đã bán
-    if (filterSoldStatus === 'unsold') return acc.isSold === false; // Lọc tài khoản chưa bán
-    return true; // Nếu không lọc theo trạng thái, trả tất cả
-  })
-  .map((acc, index) => (
-    <tr key={acc._id}>
-      <td>{(currentPage - 1) * limit + index + 1}</td>
-      <td>{acc.name}</td>
-      <td>{acc.type?.name || '—'}</td>
-      <td>{acc.price.toLocaleString()}₫</td>
-      <td>{acc.champions}</td>
-      <td>{acc.skins}</td>
-      <td>{acc.gems}</td>
-      <td>{acc.rank}</td>
-      <td style={{ color: acc.isSold ? 'green' : 'red', fontWeight: 'bold' }}>
-        {acc.isSold ? '✔️' : '✖️'}
-      </td>
-      {user?.isAdmin && (
-        <>
-          <td>{acc.username}</td>
-          <td>{acc.password}</td>
-          <td>{acc.authCode || '—'}</td>
-        </>
-      )}
-      <td>
-        <button style={{ marginBottom: '5px' }} onClick={() => setEditAccount(acc)}>Sửa</button>
-        <button onClick={() => handleAskDelete(acc._id)}>Xoá</button>
-      </td>
-    </tr>
-  ))}
+  {accounts
+    .filter((acc) => {
+      // Lọc theo trạng thái bán
+      if (filterSoldStatus === 'sold') return acc.isSold === true;
+      if (filterSoldStatus === 'unsold') return acc.isSold === false;
+      return true; // Nếu không lọc theo trạng thái, trả tất cả
+    })
+    .filter((acc) => {
+      // Lọc theo username
+      return acc.username.toLowerCase().includes(searchUsername.toLowerCase());
+    })
+    .map((acc, index) => (
+      <tr key={acc._id}>
+        <td>{(currentPage - 1) * limit + index + 1}</td>
+        <td>{acc.name}</td>
+        <td>{acc.type?.name || '—'}</td>
+        <td>{acc.price.toLocaleString()}₫</td>
+        <td>{acc.champions}</td>
+        <td>{acc.skins}</td>
+        <td>{acc.gems}</td>
+        <td>{acc.rank}</td>
+        <td style={{ color: acc.isSold ? 'green' : 'red', fontWeight: 'bold' }}>
+          {acc.isSold ? '✔️' : '✖️'}
+        </td>
+        {user?.isAdmin && (
+          <>
+            <td>{acc.username}</td>
+            <td>{acc.password}</td>
+            <td>{acc.authCode || '—'}</td>
+          </>
+        )}
+        <td>
+          <button style={{ marginBottom: '5px' }} onClick={() => setEditAccount(acc)}>Sửa</button>
+          <button onClick={() => handleAskDelete(acc._id)}>Xoá</button>
+        </td>
+      </tr>
+    ))}
+</tbody>
 
-              </tbody>
             </table>
             <div className="pagination-controls">
               <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1}>
