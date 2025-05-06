@@ -88,7 +88,7 @@ function LandingPage() {
       <Navbar />
       <div className="landing-container">
         {/* Banner hiển thị TOP MUA ACC */}
-        <div className="banner-section" style={{ backgroundImage: `url(${banner})` }}>
+        {/* <div className="banner-section" style={{ backgroundImage: `url(${banner})` }}>
           <div className="banner-overlay">
             <div className="top-buyers-box">
               <div className="top-buyers-header">TOP MUA ACC</div>
@@ -108,7 +108,7 @@ function LandingPage() {
               <img src={bia1} alt="Banner" className="banner-right-image" />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* DANH MỤC LIÊN QUÂN */}
         <h2 className="section-title">DANH MỤC LIÊN QUÂN</h2>
