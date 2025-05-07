@@ -178,7 +178,7 @@ const [isSavingUser, setIsSavingUser] = useState(false)
   
   const fetchUsers = async (page = 1) => {
     try {
-      const res = await UserService.getUsersWithPagination(user.access_token, page, 10, searchEmail);
+      const res = await UserService.getUsersWithPagination(user.access_token, page, 50, searchEmail);
       let userArray = Array.isArray(res.users) ? res.users : [];
   
       if (sortUserDate === 'asc') {
