@@ -66,7 +66,7 @@ function CategoryPage() {
       setAccounts(data.accounts || []);
       setPage(data.currentPage);
       setTotalPages(data.totalPages);
-      sessionStorage.setItem(`accounts-${id}`, JSON.stringify(data));  // Lưu tài khoản vào sessionStorage
+      sessionStorage.setItem(`accounts-${id}`, JSON.stringify(data)); // Lưu dữ liệu vào sessionStorage
     } catch (err) {
       console.error('Lỗi lấy acc:', err);
     } finally {
@@ -118,6 +118,7 @@ function CategoryPage() {
             )}
             {isLuckyCategory && (
               <div className="lucky-description">
+                {/* Các phần mô tả thử vận may */}
                 {categoryName.toLowerCase().includes('20k') && (
                   <>
                     <p><strong>THỬ VẬN MAY LIÊN QUÂN 20K:</strong></p>
@@ -132,53 +133,53 @@ function CategoryPage() {
                 )}
                 {/* Các trường hợp khác */}
                 {categoryName.toLowerCase().includes('50k') && (
-      <>
-        <p><strong>THỬ VẬN MAY LIÊN QUÂN 50K:</strong></p>
-        <p>– 100% Tài Khoản Đúng</p>
-        <p>– 100% Trắng Thông Tin Không Có SDT Và Gmail</p>
-        <p>– 100% Acc Từ 30 Tướng</p>
-        <p>– 70% Nhận Acc SIÊU KHỦNG</p>
-        <p style={{ fontStyle: 'italic', color: '#e60000' }}>
-          Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
-        </p>
-      </>
-    )}
-    {categoryName.toLowerCase().includes('100k') && (
-      <>
-        <p><strong>THỬ VẬN MAY LIÊN QUÂN 100K:</strong></p>
-        <p>– 100% Tài Khoản Đúng</p>
-        <p>– 100% Đổi Được Thông Tin</p>
-        <p>– 100% Acc Từ 40 Tướng</p>
-        <p>– 70% Nhận Acc SIÊU KHỦNG</p>
-      </>
-    )}
-    {categoryName.toLowerCase().includes('200k') && (
-      <>
-        <p><strong>THỬ VẬN MAY LIÊN QUÂN 200K:</strong></p>
-        <p>– 100% Tài Khoản Đúng</p>
-        <p>– 100% Trắng Thông Tin</p>
-        <p>– 100% Acc Từ 50 Tướng</p>
-        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-      </>
-    )}
-    {categoryName.toLowerCase().includes('300k') && (
-      <>
-        <p><strong>THỬ VẬN MAY LIÊN QUÂN 300K:</strong></p>
-        <p>– 100% Tài Khoản Đúng</p>
-        <p>– 100% Acc đổi được thông tin</p>
-        <p>– 100% Acc Từ 60 Tướng</p>
-        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-      </>
-    )}
-    {categoryName.toLowerCase().includes('500k') && (
-      <>
-        <p><strong>THỬ VẬN MAY LIÊN QUÂN 500K:</strong></p>
-        <p>– 100% Tài Khoản Đúng</p>
-        <p>– 100% Acc Từ 100 Tướng</p>
-        <p>– 100% Acc đổi được thông tin</p>
-        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-      </>
-    )}
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 50K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Trắng Thông Tin Không Có SDT Và Gmail</p>
+                    <p>– 100% Acc Từ 30 Tướng</p>
+                    <p>– 70% Nhận Acc SIÊU KHỦNG</p>
+                    <p style={{ fontStyle: 'italic', color: '#e60000' }}>
+                      Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
+                    </p>
+                  </>
+                )}
+                {categoryName.toLowerCase().includes('100k') && (
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 100K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Đổi Được Thông Tin</p>
+                    <p>– 100% Acc Từ 40 Tướng</p>
+                    <p>– 70% Nhận Acc SIÊU KHỦNG</p>
+                  </>
+                )}
+                {categoryName.toLowerCase().includes('200k') && (
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 200K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Trắng Thông Tin</p>
+                    <p>– 100% Acc Từ 50 Tướng</p>
+                    <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+                  </>
+                )}
+                {categoryName.toLowerCase().includes('300k') && (
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 300K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Acc đổi được thông tin</p>
+                    <p>– 100% Acc Từ 60 Tướng</p>
+                    <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+                  </>
+                )}
+                {categoryName.toLowerCase().includes('500k') && (
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 500K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Acc Từ 100 Tướng</p>
+                    <p>– 100% Acc đổi được thông tin</p>
+                    <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+                  </>
+                )}
               </div>
             )}
           </div>

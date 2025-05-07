@@ -54,6 +54,39 @@ function LandingPage() {
     }
   }, []); // Chỉ chạy 1 lần khi component mount
 
+
+  useEffect(() => {
+  // Kiểm tra xem trang có được tải lại hay không (refresh)
+  if (window.performance.navigation.type === 1) { // Type 1 = Refresh
+    const fetchData = async () => {
+      try {
+        const [categoryRes, accountRes, topBuyersRes] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_API_URL}/categories`),
+          axios.get(`${process.env.REACT_APP_API_URL}/accounts`),
+          axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
+        ]);
+        
+        setCategories(categoryRes.data);
+        setAccounts(accountRes.data.accounts);
+        setTopBuyers(topBuyersRes.data);
+      } catch (err) {
+        console.error('Lỗi khi tải dữ liệu:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  } else {
+    setLoading(false); // Nếu không phải refresh, không cần fetch lại dữ liệu
+  }
+
+  // Lưu lại vị trí cuộn khi người dùng rời khỏi trang
+  return () => {
+    sessionStorage.setItem('scrollPosition', window.scrollY);
+  };
+}, []); // Chỉ chạy 1 lần khi component mount
+
   // Hàm tính số tài khoản chưa bán trong từng danh mục
   const countByCategoryFromNonLuck = (catId) => {
     return accounts.filter(acc => {
