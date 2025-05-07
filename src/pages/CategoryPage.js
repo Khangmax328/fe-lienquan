@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { getAllAccounts, getAllCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
@@ -10,6 +10,7 @@ function CategoryPage() {
   const { id } = useParams();
   const [accounts, setAccounts] = useState([]);
   const [categoryName, setCategoryName] = useState('');
+  const [categoryDescription, setCategoryDescription] = useState('');
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [isPending, setIsPending] = useState(false);
@@ -21,22 +22,29 @@ function CategoryPage() {
   const [sortPrice, setSortPrice] = useState('none');
   const [isLuckyCategory, setIsLuckyCategory] = useState(false);
 
+  const location = useLocation();
+
   // Lấy lại dữ liệu từ sessionStorage khi trang load lại
   const fetchCategoryName = async () => {
     const savedCategoryName = sessionStorage.getItem(`categoryName-${id}`);
-    if (savedCategoryName) {
+    const savedCategoryDescription = sessionStorage.getItem(`categoryDescription-${id}`);
+    
+    if (savedCategoryName && savedCategoryDescription) {
       setCategoryName(savedCategoryName);
+      setCategoryDescription(savedCategoryDescription);
     } else {
       try {
         const allCats = await getAllCategories();
         const found = allCats.find((c) => c._id === id);
         if (found) {
           setCategoryName(found.name);
-          sessionStorage.setItem(`categoryName-${id}`, found.name);  // Lưu vào sessionStorage
+          setCategoryDescription(found.description || ''); // Cập nhật mô tả của danh mục
+          sessionStorage.setItem(`categoryName-${id}`, found.name);  // Lưu tên vào sessionStorage
+          sessionStorage.setItem(`categoryDescription-${id}`, found.description || '');  // Lưu mô tả vào sessionStorage
           setIsLuckyCategory(found.name.toLowerCase().includes('thử vận may'));
         }
       } catch (err) {
-        console.error('Không lấy được tên category:', err);
+        console.error('Không lấy được tên hoặc mô tả category:', err);
       }
     }
   };
@@ -103,71 +111,78 @@ function CategoryPage() {
         <div className="category-wrapper">
           <div className="category-header-narrow">
             <h1 className="category-title">Danh mục {categoryName}</h1>
+            {categoryDescription && (
+              <div className="category-description">
+                <p>{categoryDescription}</p>
+              </div>
+            )}
             {isLuckyCategory && (
               <div className="lucky-description">
-              {categoryName.toLowerCase().includes('20k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 20K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Không Có SDT Và Không Có Gmail</p>
-                  <p>– 100% Acc Từ 10 Tướng</p>
-                  <p>– 50% Nhận Acc SIÊU KHỦNG</p>
-                  <p style={{ fontStyle: 'italic', color: '#e60000' }}>
-                    Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
-                  </p>
-                </>
-              )}
-              {categoryName.toLowerCase().includes('50k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 50K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Trắng Thông Tin Không Có SDT Và Gmail</p>
-                  <p>– 100% Acc Từ 30 Tướng</p>
-                  <p>– 70% Nhận Acc SIÊU KHỦNG</p>
-                  <p style={{ fontStyle: 'italic', color: '#e60000' }}>
-                    Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
-                  </p>
-                </>
-              )}
-              {categoryName.toLowerCase().includes('100k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 100K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Đổi Được Thông Tin</p>
-                  <p>– 100% Acc Từ 40 Tướng</p>
-                  <p>– 70% Nhận Acc SIÊU KHỦNG</p>
-                </>
-              )}
-              {categoryName.toLowerCase().includes('200k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 200K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Trắng Thông Tin</p>
-                  <p>– 100% Acc Từ 50 Tướng</p>
-                  <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-                </>
-              )}
-              {categoryName.toLowerCase().includes('300k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 300K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Acc đổi được thông tin</p>
-                  <p>– 100% Acc Từ 60 Tướng</p>
-                  <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-                </>
-              )}
-              {categoryName.toLowerCase().includes('500k') && (
-                <>
-                  <p><strong>THỬ VẬN MAY LIÊN QUÂN 500K:</strong></p>
-                  <p>– 100% Tài Khoản Đúng</p>
-                  <p>– 100% Acc Từ 100 Tướng</p>
-                  <p>– 100% Acc đổi được thông tin</p>
-                  <p>– 80% Nhận Acc SIÊU KHỦNG</p>
-                </>
-              )}
-            </div>
+                {categoryName.toLowerCase().includes('20k') && (
+                  <>
+                    <p><strong>THỬ VẬN MAY LIÊN QUÂN 20K:</strong></p>
+                    <p>– 100% Tài Khoản Đúng</p>
+                    <p>– 100% Không Có SDT Và Không Có Gmail</p>
+                    <p>– 100% Acc Từ 10 Tướng</p>
+                    <p>– 50% Nhận Acc SIÊU KHỦNG</p>
+                    <p style={{ fontStyle: 'italic', color: '#e60000' }}>
+                      Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
+                    </p>
+                  </>
+                )}
+                {/* Các trường hợp khác */}
+                {categoryName.toLowerCase().includes('50k') && (
+      <>
+        <p><strong>THỬ VẬN MAY LIÊN QUÂN 50K:</strong></p>
+        <p>– 100% Tài Khoản Đúng</p>
+        <p>– 100% Trắng Thông Tin Không Có SDT Và Gmail</p>
+        <p>– 100% Acc Từ 30 Tướng</p>
+        <p>– 70% Nhận Acc SIÊU KHỦNG</p>
+        <p style={{ fontStyle: 'italic', color: '#e60000' }}>
+          Lưu Ý ! Thử Vận May Chấp Nhận HÊN - XUI
+        </p>
+      </>
+    )}
+    {categoryName.toLowerCase().includes('100k') && (
+      <>
+        <p><strong>THỬ VẬN MAY LIÊN QUÂN 100K:</strong></p>
+        <p>– 100% Tài Khoản Đúng</p>
+        <p>– 100% Đổi Được Thông Tin</p>
+        <p>– 100% Acc Từ 40 Tướng</p>
+        <p>– 70% Nhận Acc SIÊU KHỦNG</p>
+      </>
+    )}
+    {categoryName.toLowerCase().includes('200k') && (
+      <>
+        <p><strong>THỬ VẬN MAY LIÊN QUÂN 200K:</strong></p>
+        <p>– 100% Tài Khoản Đúng</p>
+        <p>– 100% Trắng Thông Tin</p>
+        <p>– 100% Acc Từ 50 Tướng</p>
+        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+      </>
+    )}
+    {categoryName.toLowerCase().includes('300k') && (
+      <>
+        <p><strong>THỬ VẬN MAY LIÊN QUÂN 300K:</strong></p>
+        <p>– 100% Tài Khoản Đúng</p>
+        <p>– 100% Acc đổi được thông tin</p>
+        <p>– 100% Acc Từ 60 Tướng</p>
+        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+      </>
+    )}
+    {categoryName.toLowerCase().includes('500k') && (
+      <>
+        <p><strong>THỬ VẬN MAY LIÊN QUÂN 500K:</strong></p>
+        <p>– 100% Tài Khoản Đúng</p>
+        <p>– 100% Acc Từ 100 Tướng</p>
+        <p>– 100% Acc đổi được thông tin</p>
+        <p>– 80% Nhận Acc SIÊU KHỦNG</p>
+      </>
+    )}
+              </div>
             )}
           </div>
+
           <div className="filter-container">
             <input
               type="number"
