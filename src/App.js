@@ -28,7 +28,7 @@ function App() {
       <Route path="/" element={<Navigate to="/home" />} /> 
       <Route path="/home" element={<LandingPage />} />
 
-        <Route path="/" element={<HomePage />} />
+        
         <Route path="/product/:id" element={<ProductDetailsPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<LoginPage />} />
