@@ -129,3 +129,21 @@
     margin-top: 5px;
 }
   }
+
+  @media screen and (min-width: 768px) and (max-width: 1024px) {
+    .profile-box {
+      max-width: 600px;
+      margin: 267px auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 40px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    }
+  
+    .profile-container {
+      border-bottom: 1px solid #ccc;
+      padding: 40px 20px;
+      background: #f5f5f5;
+    }
+  }
+  

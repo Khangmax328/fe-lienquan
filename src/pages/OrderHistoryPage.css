@@ -122,3 +122,22 @@ td .detail-btn:hover {
     padding: 4px 10px;
   }
 }
+@media screen and (min-width: 768px) and (max-width: 1024px){
+.order-history-container {
+  /* max-width: 1200px; */
+  width: 970px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+.order-details-container {
+  max-width: 1200px;
+  margin: 363px auto;
+  padding: 30px 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+}

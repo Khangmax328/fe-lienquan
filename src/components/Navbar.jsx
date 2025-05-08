@@ -95,8 +95,11 @@ const Navbar = () => {
           <a href="/home" className="nav-item">TRANG CHỦ</a>
           <a href="/banking" className="nav-item">NẠP ATM - VÍ</a>
           <a href="/order-history" className="nav-item">LỊCH SỬ MUA</a>
-          {user?.email && (
+          {user?.email && !(window.innerWidth >= 768 && window.innerWidth <= 1024) &&(
             <a href="/profile" className="nav-item">QUẢN LÍ TÀI KHOẢN</a>
+          )}
+          {user?.email && user.isAdmin &&  (window.innerWidth >= 768 && window.innerWidth <= 1024) &&(
+            <a href="/admin" className="nav-item">QUẢN LÍ HỆ THỐNG</a>
           )}
         </div>
       )}
@@ -113,7 +116,7 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            {!isMobile && user.isAdmin && location.pathname !== '/admin' && (
+            {!isMobile && user.isAdmin && location.pathname !== '/admin' && !(window.innerWidth >= 768 && window.innerWidth <= 1024) &&(
               <button onClick={() => navigate('/admin')} className="manage-btn">
                 Quản lý hệ thống
               </button>

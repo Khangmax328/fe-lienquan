@@ -179,3 +179,14 @@
     transform: rotate(360deg);
   }
 }
+@media screen and (max-width: 1024px){
+  .order-details-container {
+    /* max-width: 1200px; */
+    width: 970px;
+    margin: 363px auto;
+    padding: 30px 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+}

@@ -55,3 +55,11 @@
   .footer-bottom img:hover {
     transform: scale(1.1);
   }
+
+  @media screen and (max-width: 1024px){
+    .footer {
+      background-color: #f5f5f5;
+      padding: 20px 40px;
+      margin-top: 0px;
+  }
+  }
