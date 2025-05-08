@@ -23,6 +23,48 @@ const AccountDetailsPage = () => {
     enabled: !!id,
   })
 
+  // const handleBuyNow = async () => {
+  //   if (!user?.access_token) {
+  //     Swal.fire({
+  //       icon: 'warning',
+  //       title: 'Quý khách vui lòng đăng nhập!',
+  //       confirmButtonText: 'Đăng nhập',
+  //       allowOutsideClick: false,
+  //     }).then(() => {
+  //       navigate('/login')
+  //     })
+  //     return
+  //   }
+
+  //   const result = await Swal.fire({
+  //     title: 'Xác nhận mua',
+  //     text: `Bạn chắc chắn muốn mua acc này với giá ${account.price.toLocaleString()}đ?`,
+  //     icon: 'question',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'MUA NGAY',
+  //   })
+
+  //   if (result.isConfirmed) {
+  //     try {
+  //       const res = await OrderService.createOrder({
+  //         accountId: account._id,
+  //         token: user.access_token,
+  //       })
+  //       // Swal.fire('Thành công!', 'Tài khoản đã được mua.', 'success')
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Thành công!',
+  //         text: 'Tài khoản đã được mua.',
+  //         timer: 1500,  // Tự động đóng sau 2 giây
+  //         showConfirmButton: false,
+  //       })
+  //       dispatch(updateUser({ ...user, balance: user.balance - account.price }))
+  //       navigate(`/order-details/${res.order._id}`)
+  //     } catch (err) {
+  //       Swal.fire('Lỗi', err?.response?.data?.message || 'Lỗi khi mua tài khoản', 'error')
+  //     }
+  //   }
+  // }
   const handleBuyNow = async () => {
     if (!user?.access_token) {
       Swal.fire({
@@ -31,34 +73,45 @@ const AccountDetailsPage = () => {
         confirmButtonText: 'Đăng nhập',
         allowOutsideClick: false,
       }).then(() => {
-        navigate('/login')
-      })
-      return
+        navigate('/login');
+      });
+      return;
     }
-
+  
     const result = await Swal.fire({
       title: 'Xác nhận mua',
       text: `Bạn chắc chắn muốn mua acc này với giá ${account.price.toLocaleString()}đ?`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'MUA NGAY',
-    })
-
+    });
+  
     if (result.isConfirmed) {
       try {
+        // Gọi API tạo đơn hàng
         const res = await OrderService.createOrder({
           accountId: account._id,
           token: user.access_token,
-        })
-        Swal.fire('Thành công!', 'Tài khoản đã được mua.', 'success')
-        dispatch(updateUser({ ...user, balance: user.balance - account.price }))
-        navigate(`/order-details/${res.order._id}`)
+        });
+  
+        // Hiển thị thông báo thành công
+        Swal.fire({
+          icon: 'success',
+          title: 'Thành công!',
+          text: 'Tài khoản đã được mua.',
+          timer: 1500,  // Tự động đóng sau 1.5 giây
+          showConfirmButton: false,
+        }).then(() => {
+          // Sau khi thông báo đóng, chuyển hướng sang trang chi tiết đơn hàng
+          dispatch(updateUser({ ...user, balance: user.balance - account.price }));
+          navigate(`/order-details/${res.order._id}`);
+        });
       } catch (err) {
-        Swal.fire('Lỗi', err?.response?.data?.message || 'Lỗi khi mua tài khoản', 'error')
+        Swal.fire('Lỗi', err?.response?.data?.message || 'Lỗi khi mua tài khoản', 'error');
       }
     }
-  }
-
+  };
+  
   if (isLoading) return <LoadingSpinner /> // ✅ Loading đẹp
   if (!account) return <div>Không tìm thấy tài khoản</div>
 

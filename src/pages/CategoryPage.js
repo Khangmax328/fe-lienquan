@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getAllAccounts, getAllCategories } from '../services/api';
 import ProductCard from '../components/ProductCard';
 import Footer from '../components/Footer';
@@ -21,8 +21,6 @@ function CategoryPage() {
   const [rank, setRank] = useState('Tất cả rank');
   const [sortPrice, setSortPrice] = useState('none');
   const [isLuckyCategory, setIsLuckyCategory] = useState(false);
-
-  const location = useLocation();
 
   // Lấy lại dữ liệu từ sessionStorage khi trang load lại
   const fetchCategoryName = async () => {
@@ -49,17 +47,17 @@ function CategoryPage() {
     }
   };
 
-  const fetchAccounts = async (customPage = 1) => {
+  const fetchAccounts = async (customPage = 1, filters = {}) => {
     setIsPending(true);
     try {
       const params = {
         type: id,
         page: customPage,
         limit: 50,
-        minPrice,
-        maxPrice,
-        sortPrice: sortPrice !== 'none' ? sortPrice : '',
-        rank: rank !== 'Tất cả rank' ? rank : ''
+        minPrice: filters.minPrice || minPrice,
+        maxPrice: filters.maxPrice || maxPrice,
+        sortPrice: filters.sortPrice || sortPrice,
+        rank: filters.rank || rank
       };
 
       const data = await getAllAccounts(params);
@@ -105,23 +103,16 @@ function CategoryPage() {
   };
 
   const handleRefresh = () => {
-    // Reset tất cả bộ lọc và trang về 1
+    // Reset các bộ lọc và trang về trang 1 ngay lập tức
     setMinPrice('');
     setMaxPrice('');
     setRank('Tất cả rank');
     setSortPrice('none');
     setPage(1); // Chuyển về trang 1 khi làm mới
-
-    // Gọi lại fetchAccounts với bộ lọc rỗng và trang 1
-    fetchAccounts({}, 1); // Truyền đối tượng rỗng để không áp dụng bộ lọc
+    
+    // Gọi lại API ngay lập tức từ trang 1 với bộ lọc đã reset
+    fetchAccounts(1, { minPrice: '', maxPrice: '', rank: 'Tất cả rank', sortPrice: 'none' });
   };
-
-  useEffect(() => {
-    // Khi reset bộ lọc và trang, gọi lại API ngay lập tức
-    if (minPrice === '' && maxPrice === '' && rank === 'Tất cả rank' && sortPrice === 'none') {
-      fetchAccounts({}, 1); // Gọi lại API với bộ lọc rỗng
-    }
-  }, [minPrice, maxPrice, rank, sortPrice]);
 
   return (
     <>
@@ -229,7 +220,7 @@ function CategoryPage() {
             )}
 
             <select value={sortPrice} onChange={(e) => setSortPrice(e.target.value)}>
-              <option value="none">Tất cả giá</option>
+              <option value="none">Sắp xếp giá</option>
               <option value="asc">Giá tăng dần</option>
               <option value="desc">Giá giảm dần</option>
             </select>
