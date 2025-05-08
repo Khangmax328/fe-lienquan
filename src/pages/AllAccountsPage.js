@@ -17,26 +17,24 @@ function AllAccountsPage() {
   const [isPending, setIsPending] = useState(false);
   const [sortPrice, setSortPrice] = useState('none');
 
+  // Hàm fetch lại tài khoản
   const fetchAccounts = async (filters = {}, customPage = 1) => {
     try {
       setIsPending(true);
-      setAccounts([]);
+      setAccounts([]); // Đảm bảo xóa danh sách trước khi tải lại
 
       const params = {
         page: customPage,
         limit: 50,
         isSold: false, // Chỉ lấy account chưa bán
-        minPrice,
-        maxPrice,
-        sortPrice: sortPrice !== 'none' ? sortPrice : '',
-        rank: rank !== 'Tất cả rank' ? rank : ''
+        ...filters, // Dùng filters nếu có, còn không sẽ dùng mặc định
       };
 
       const res = await axios.get(`${API_URL}/accounts/exclude-lucky`, { params });
       setAccounts(res.data.accounts || []);
       setTotalPages(res.data.totalPages);
       setPage(customPage);
-      
+
       // Lưu vào sessionStorage sau khi fetch
       sessionStorage.setItem('accountsData', JSON.stringify({
         accounts: res.data.accounts,
@@ -59,12 +57,23 @@ function AllAccountsPage() {
       setPage(parsedData.currentPage);
       setTotalPages(parsedData.totalPages);
     } else {
-      fetchAccounts();
+      fetchAccounts(); // Nếu không có dữ liệu lưu trữ, fetch mặc định
     }
   }, []);
 
   const handleSearch = () => {
+    // Khi bấm tìm kiếm, áp dụng bộ lọc và tìm từ trang 1
     fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, 1);
+  };
+
+  const handleRefresh = () => {
+    // Khi làm mới, reset tất cả bộ lọc và trang về 1
+    setMinPrice('');
+    setMaxPrice('');
+    setRank('Tất cả rank');
+    setSortPrice('none');
+    setPage(1); // Đảm bảo chuyển về trang 1 khi làm mới
+    fetchAccounts({}, 1); // Truyền đối tượng rỗng để không áp dụng bộ lọc
   };
 
   return (
@@ -100,11 +109,12 @@ function AllAccountsPage() {
             </select>
 
             <select value={sortPrice} onChange={(e) => setSortPrice(e.target.value)}>
-              <option value="none">Sắp xếp giá</option>
+              <option value="none">Tất cả giá</option>
               <option value="asc">Giá tăng dần</option>
               <option value="desc">Giá giảm dần</option>
             </select>
             <button onClick={handleSearch}>Tìm</button>
+            <button onClick={handleRefresh}>Làm mới</button> {/* Gọi hàm làm mới */}
           </div>
 
           <div className="product-list">

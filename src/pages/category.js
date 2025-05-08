@@ -171,7 +171,7 @@ function CategoryPage() {
             )}
   
             <select value={sortPrice} onChange={(e) => setSortPrice(e.target.value)}>
-              <option value="none">Sắp xếp giá</option>
+              <option value="none">Tất cả giá</option>
               <option value="asc">Giá tăng dần</option>
               <option value="desc">Giá giảm dần</option>
             </select>
