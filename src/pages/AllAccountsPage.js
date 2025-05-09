@@ -128,28 +128,42 @@ function AllAccountsPage() {
           </div>
 
           <div className="pagination">
-            <button
-              onClick={() => page > 1 && fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, page - 1)}
-              disabled={page === 1}
-            >
-              &laquo;
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-              <button
-                key={p}
-                onClick={() => fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, p)}
-                className={p === page ? 'active' : ''}
-              >
-                {p}
-              </button>
-            ))}
-            <button
-              onClick={() => page < totalPages && fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, page + 1)}
-              disabled={page === totalPages}
-            >
-              &raquo;
-            </button>
-          </div>
+  <button
+    onClick={() => page > 1 && fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, page - 1)}
+    disabled={page === 1}
+  >
+    &laquo;
+  </button>
+
+  {/* Chỉ hiển thị tối đa 5 trang */}
+  {Array.from({ length: 5 }, (_, i) => {
+    const startPage = Math.max(1, page - 2); 
+    const pageNumber = startPage + i;
+    if (pageNumber <= totalPages) {
+      return (
+        <button
+          key={pageNumber}
+          onClick={() => fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, pageNumber)}
+          className={pageNumber === page ? 'active' : ''}
+        >
+          {pageNumber}
+        </button>
+      );
+    }
+    return null;
+  })}
+
+  <button
+    onClick={() => page < totalPages && fetchAccounts({ minPrice, maxPrice, rank, sortPrice }, page + 1)}
+    disabled={page === totalPages}
+  >
+  &raquo;
+  </button>
+
+  {/* Hiển thị tổng số trang */}
+  <span className="page-info">{`Trang ${page} / ${totalPages}`}</span>
+</div>
+
         </div>
       </div>
       <Footer />

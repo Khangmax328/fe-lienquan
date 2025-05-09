@@ -239,18 +239,39 @@ function CategoryPage() {
           )}
 
           <div className="pagination">
-            <button onClick={() => fetchAccounts(page - 1)} disabled={page === 1}>
-              &laquo;
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button key={i + 1} className={page === i + 1 ? 'active' : ''} onClick={() => fetchAccounts(i + 1)}>
-                {i + 1}
-              </button>
-            ))}
-            <button onClick={() => fetchAccounts(page + 1)} disabled={page === totalPages}>
-              &raquo;
-            </button>
-          </div>
+  <button onClick={() => fetchAccounts(page - 1)} disabled={page === 1}>
+    &laquo;
+  </button>
+
+  {/* Hiển thị các trang hiện tại */}
+  {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
+    const startPage = Math.max(1, page - 2); 
+    const pageNumber = startPage + i;
+    if (pageNumber <= totalPages) {
+      return (
+        <button 
+          key={pageNumber} 
+          className={page === pageNumber ? 'active' : ''} 
+          onClick={() => fetchAccounts(pageNumber)}
+        >
+          {pageNumber}
+        </button>
+      );
+    }
+    return null;
+  })}
+
+  {/* Hiển thị nút tiếp theo */}
+  <button onClick={() => fetchAccounts(page + 1)} disabled={page === totalPages}>
+    &raquo;
+  </button>
+
+  {/* Thẻ span hiển thị tổng số trang, căn dưới và giữa */}
+  <span className="page-info">{`Trang ${page} / ${totalPages}`}</span>
+</div>
+
+
+
         </div>
       </div>
       <Footer />
