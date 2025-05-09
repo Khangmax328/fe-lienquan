@@ -33,17 +33,7 @@
   /* border-bottom: 1px solid #ddd; */
 }
 
-.price-box {
-  display: inline-block;
-  padding: 4px 12px;
-  border: 1px solid red;
-  color: red;
-  font-weight: bold;
-  /* border-radius: 8px; */
-  font-size: 16px;
-  background-color: white;
-  /* Hoặc transparent */
-}
+
 
 .product-card h3 {
   font-size: 16px;
@@ -71,14 +61,22 @@
   font-weight: bold;
   font-size: 15px;
 }
-
+.price-box {
+  display: inline-block;
+  padding: 4px 12px;
+  border: 1px solid red;
+  color: red;
+  font-weight: bold;
+  /* border-radius: 8px; */
+  font-size: 16px;
+  background-color: white;
+  /* Hoặc transparent */
+}
 .product-card button {
   border: 1px solid #e53935;
   background-color: #e53935;
   color: #fff;
-  /* border: none; */
-  padding: 6px 12px;
-  /* border-radius: 6px; */
+  padding: 7px 12px;
   cursor: pointer;
   font-weight: 500;
   transition: background-color 0.2s;
@@ -165,21 +163,13 @@
   .footer button {
     flex: 1;
     padding: 12px 0;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     text-align: center;
     border-radius: 0;
   }
 
   /* ĐẶC BIỆT ❗: thêm display: flex vào price-box luôn */
-  .price-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid red;
-    color: red;
-    background: white;
-  }
 
   /* Nút CHI TIẾT */
   .footer button {
