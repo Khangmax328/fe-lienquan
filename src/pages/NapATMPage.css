@@ -20,7 +20,7 @@
 .napatm-title {
   text-align: center;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 700 !important;
   color: #0051ff;
   margin-bottom: 28px;
   position: relative;
@@ -133,7 +133,7 @@
   background-color: #1f8c3d;
 }
 .napatm-field input {
-  font-weight: 700;
+  font-weight: 700 !important;
   color: #333;
   width: 93%;
   padding: 10px 12px;
