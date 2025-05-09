@@ -61,6 +61,7 @@
   font-weight: bold;
   font-size: 15px;
 }
+
 .price-box {
   display: inline-block;
   padding: 4px 12px;
@@ -72,6 +73,7 @@
   background-color: white;
   /* Hoặc transparent */
 }
+
 .product-card button {
   border: 1px solid #e53935;
   background-color: #e53935;
@@ -174,7 +176,7 @@
   /* Nút CHI TIẾT */
   .footer button {
 
-    border: 2px solid red !important;
+    border: 1px solid red !important;
     background-color: #e53935;
     color: white;
     border: none;
@@ -199,7 +201,8 @@
     align-items: center;
     justify-content: flex-start;
     margin-left: -10px !important;
-}
+  }
+
   .product-card {
     border: 1px solid #ccc;
 
