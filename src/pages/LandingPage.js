@@ -12,11 +12,35 @@ function LandingPage() {
   const [categories, setCategories] = useState([]);
   const [accounts, setAccounts] = useState([]);
   const [topBuyers, setTopBuyers] = useState([]);
-  const [loading, setLoading] = useState(true); // ✅ thêm loading
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Kiểm tra nếu đã có dữ liệu trong sessionStorage thì không cần tải lại
+    const fetchData = async () => {
+      setLoading(true); // Đảm bảo loading được bật ngay từ đầu
+      try {
+        const [categoryRes, accountRes, topBuyersRes] = await Promise.all([
+          axios.get(`${process.env.REACT_APP_API_URL}/categories`),
+          axios.get(`${process.env.REACT_APP_API_URL}/accounts`),
+          axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
+        ]);
+
+        setCategories(categoryRes.data);
+        setAccounts(accountRes.data.accounts);
+        setTopBuyers(topBuyersRes.data);
+
+        // Lưu vào sessionStorage
+        sessionStorage.setItem('categories', JSON.stringify(categoryRes.data));
+        sessionStorage.setItem('accounts', JSON.stringify(accountRes.data.accounts));
+        sessionStorage.setItem('topBuyers', JSON.stringify(topBuyersRes.data));
+      } catch (err) {
+        console.error('Lỗi khi tải dữ liệu:', err);
+      } finally {
+        setLoading(false); // Tắt loading sau khi fetch dữ liệu xong
+      }
+    };
+
+    // Kiểm tra sessionStorage và gọi API nếu chưa có dữ liệu
     const storedCategories = sessionStorage.getItem('categories');
     const storedAccounts = sessionStorage.getItem('accounts');
     const storedTopBuyers = sessionStorage.getItem('topBuyers');
@@ -25,67 +49,16 @@ function LandingPage() {
       setCategories(JSON.parse(storedCategories));
       setAccounts(JSON.parse(storedAccounts));
       setTopBuyers(JSON.parse(storedTopBuyers));
-      setLoading(false);
+      setLoading(false); // Nếu dữ liệu đã có, tắt loading ngay
     } else {
-      // Fetch lại dữ liệu nếu chưa có trong sessionStorage
-      const fetchData = async () => {
-        try {
-          const [categoryRes, accountRes, topBuyersRes] = await Promise.all([
-            axios.get(`${process.env.REACT_APP_API_URL}/categories`),
-            axios.get(`${process.env.REACT_APP_API_URL}/accounts`),
-            axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
-          ]);
-          setCategories(categoryRes.data);
-          setAccounts(accountRes.data.accounts);
-          setTopBuyers(topBuyersRes.data);
-
-          // Lưu dữ liệu vào sessionStorage để tránh tải lại
-          sessionStorage.setItem('categories', JSON.stringify(categoryRes.data));
-          sessionStorage.setItem('accounts', JSON.stringify(accountRes.data.accounts));
-          sessionStorage.setItem('topBuyers', JSON.stringify(topBuyersRes.data));
-        } catch (err) {
-          console.error('Lỗi khi tải dữ liệu:', err);
-        } finally {
-          setLoading(false); // ✅ fetch xong mới tắt loading
-        }
-      };
-
-      fetchData();
+      fetchData(); // Nếu không có dữ liệu trong sessionStorage, fetch dữ liệu từ API
     }
-  }, []); // Chỉ chạy 1 lần khi component mount
 
-
-  useEffect(() => {
-  // Kiểm tra xem trang có được tải lại hay không (refresh)
-  if (window.performance.navigation.type === 1) { // Type 1 = Refresh
-    const fetchData = async () => {
-      try {
-        const [categoryRes, accountRes, topBuyersRes] = await Promise.all([
-          axios.get(`${process.env.REACT_APP_API_URL}/categories`),
-          axios.get(`${process.env.REACT_APP_API_URL}/accounts`),
-          axios.get(`${process.env.REACT_APP_API_URL}/user/top-buyers`),
-        ]);
-        
-        setCategories(categoryRes.data);
-        setAccounts(accountRes.data.accounts);
-        setTopBuyers(topBuyersRes.data);
-      } catch (err) {
-        console.error('Lỗi khi tải dữ liệu:', err);
-      } finally {
-        setLoading(false);
-      }
+    // Lưu lại vị trí cuộn khi người dùng rời khỏi trang
+    return () => {
+      sessionStorage.setItem('scrollPosition', window.scrollY);
     };
-
-    fetchData();
-  } else {
-    setLoading(false); // Nếu không phải refresh, không cần fetch lại dữ liệu
-  }
-
-  // Lưu lại vị trí cuộn khi người dùng rời khỏi trang
-  return () => {
-    sessionStorage.setItem('scrollPosition', window.scrollY);
-  };
-}, []); // Chỉ chạy 1 lần khi component mount
+  }, []); // Chỉ chạy 1 lần khi component mount
 
   // Hàm tính số tài khoản chưa bán trong từng danh mục
   const countByCategoryFromNonLuck = (catId) => {
